@@ -7,7 +7,7 @@ import ilog.cplex.IloCplex;
 
 public abstract class Exercise
 {
-    private Map<String, IloNumVar> variableMap = new HashMap<>();
+    private Map<String, IloNumVar> variables = new HashMap<>();
 
     public void showResults(IloCplex cplex) throws IloException
     {
@@ -18,7 +18,7 @@ public abstract class Exercise
         {
             System.out.println("Objective = " + cplex.getObjValue());
             System.out.println("Variables:");
-            for (String variable : variableMap.keySet())
+            for (String variable : variables.keySet())
             {
                 System.out.println(String.format("%s = %s", variable, cplex.getValue(getVariable(variable))));
             }
@@ -27,12 +27,12 @@ public abstract class Exercise
 
     protected IloNumVar getVariable(String name)
     {
-        return variableMap.get(name);
+        return variables.get(name);
     }
 
     protected void setVariable(String name, IloNumVar variable)
     {
-        variableMap.put(name, variable);
+        variables.put(name, variable);
     }
 
     public abstract void setUpModel(IloCplex cplex) throws IloException;
