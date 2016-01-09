@@ -122,6 +122,6 @@ public class Exercise12_1 extends Exercise
 
     private static String getVariableName(String oil, Kind kind, int month)
     {
-        return String.format("%s_%s_%s", oil, kind, month);
+        return String.format("%s_%s_%s", month, oil, kind);
     }
 }
