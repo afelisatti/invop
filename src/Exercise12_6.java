@@ -212,7 +212,7 @@ public class Exercise12_6 extends Exercise
         cplex.addLe(jetFuelVapour, 0);
         //Fuel oil restrictions
         IloLinearNumExpr fuelOilOrigin = cplex.linearNumExpr();
-        fuelOilOrigin.addTerm(1, getVariable("FO"));
+        fuelOilOrigin.addTerm(18, getVariable("FO"));
         fuelOilOrigin.addTerm(-10, getVariable("LiOFO"));
         fuelOilOrigin.addTerm(-3, getVariable("HOFO"));
         fuelOilOrigin.addTerm(-4, getVariable("COFO"));
