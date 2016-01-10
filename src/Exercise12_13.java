@@ -4,6 +4,7 @@ import ilog.cplex.IloCplex;
 
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.HashMap;
 
 public class Exercise12_13 extends Exercise {
 
@@ -15,7 +16,7 @@ public class Exercise12_13 extends Exercise {
         String div2 = "D1_";
         String div1 = "D2_";
         //String retail = "R_";
-        String oil = "oil"
+        String oil = "oil";
         int[] oilGalons = new int[] {9,13,14,17,18,19,23,21,9,11,17,18,18,17,22,24,36,43,6,15,15,25,39};
         String delivery = "delivery";
         int[] deliveryPoints = new int[] {11,47,44,25,10,26,26,54,18,51,20,105,7,16,34,100,50,21,11,19,14,10,11};
@@ -23,7 +24,7 @@ public class Exercise12_13 extends Exercise {
         int[] spiritMarkets = new int[] {34,411,82,157,5,183,14,215,102,21,54,0,6,96,118,112,535,8,53,28,69,65,27};
         String[] categoryA = new String[] {"1","2","3","5","6","10","15","20"};
         String[] categoryB = new String[] {"4","7","8","9","11","12","13","14","16","17","18","19","21","22","23"};
-        Dictionary<String,int[]> fixedValues = new Dictionary<String,int[]>() ;
+        HashMap<String,int[]> fixedValues = new HashMap<String,int[]>() ;
         fixedValues.put(delivery,deliveryPoints);
         fixedValues.put(oil,oilGalons);
         fixedValues.put(spiritMarket,spiritMarkets);
@@ -94,7 +95,7 @@ public class Exercise12_13 extends Exercise {
             deliveryPointsUpperRestrictionForD1.addTerm(deliveryPoints[i-1],getVariable(d1VarName));
         }
         cplex.addGe(deliveryPointsLowerRestrictionForD1,GetPercent(deliveryPoints, 0.35));
-        cplex.addLe(deliveryPointsUpperRestrictionForD1, GetPercent(deliveryPoints, 0.45)   
+        cplex.addLe(deliveryPointsUpperRestrictionForD1, GetPercent(deliveryPoints, 0.45));
         //FALTAN RESTRICCIONES
     }
 
