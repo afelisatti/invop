@@ -3,7 +3,7 @@ import ilog.concert.IloLinearNumExpr;
 import ilog.concert.IloObjectiveSense;
 import ilog.cplex.IloCplex;
 
-public class Exercise12_6 extends Exercise
+public class Exercise12_06 extends Exercise
 {
 
     private String[] names = new String[]
@@ -16,12 +16,12 @@ public class Exercise12_6 extends Exercise
                     "LNRe", "MNRe", "HNRe",// (light, medium and heavy naphta regular)
                     "RGP", "RGRe",// (reformed gasoline petrol and regular)
                     "LiO", "HO",// (light and heavy oils)
-                    "LiOJF", "LiOC",// (light oil jet fuel, fuel oil and cracked oil)
-                    "HOJF", "HOC",// (heavy oil jet fuel, fuel oil and cracked oil)
+                    "LiOJF", "LiOC",// (light oil jet fuel and cracked oil)
+                    "HOJF", "HOC",// (heavy oil jet fuel and cracked oil)
                     "R",// (residuum)
-                    "RJF", "RLO",// (residuum jet fuel, fuel oil and lube oil)
+                    "RJF", "RLO",// (residuum jet fuel and lube oil)
                     "CG", "CO",// (cracked gasoline and oil)
-                    "COJF",// (cracked oil jet fuel and fuel oil)
+                    "COJF",// (cracked oil jet fuel)
                     "CGP", "CGRe",// (cracked gasoline petrol and regular)
                     "PP", "RP", "JF", "FO", "LO"// (premium petrol, regular petrol, jet fuel, fuel oil, lube oil)
             };

@@ -3,7 +3,7 @@ import ilog.concert.IloLinearNumExpr;
 import ilog.concert.IloObjectiveSense;
 import ilog.cplex.IloCplex;
 
-public class Exercise12_1 extends Exercise
+public class Exercise12_01 extends Exercise
 {
     public enum Kind {
         Bought, Refined, Saved
