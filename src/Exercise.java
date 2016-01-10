@@ -1,5 +1,5 @@
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import ilog.concert.IloException;
 import ilog.concert.IloNumVar;
@@ -7,7 +7,7 @@ import ilog.cplex.IloCplex;
 
 public abstract class Exercise
 {
-    private Map<String, IloNumVar> variables = new HashMap<>();
+    private Map<String, IloNumVar> variables = new TreeMap<>();
 
     public void showResults(IloCplex cplex) throws IloException
     {

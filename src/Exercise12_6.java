@@ -1,5 +1,6 @@
 import ilog.concert.IloException;
 import ilog.concert.IloLinearNumExpr;
+import ilog.concert.IloObjectiveSense;
 import ilog.cplex.IloCplex;
 
 public class Exercise12_6 extends Exercise
@@ -155,7 +156,89 @@ public class Exercise12_6 extends Exercise
         residuumDestination.addTerm(-1, getVariable("RFO"));
         residuumDestination.addTerm(-1, getVariable("RLO"));
         cplex.addEq(residuumDestination, 0);
+        //Petrol restrictions
+        IloLinearNumExpr premiumPetrolOrigin = cplex.linearNumExpr();
+        premiumPetrolOrigin.addTerm(1, getVariable("PP"));
+        premiumPetrolOrigin.addTerm(-1, getVariable("LNP"));
+        premiumPetrolOrigin.addTerm(-1, getVariable("MNP"));
+        premiumPetrolOrigin.addTerm(-1, getVariable("HNP"));
+        premiumPetrolOrigin.addTerm(-1, getVariable("RGP"));
+        premiumPetrolOrigin.addTerm(-1, getVariable("CGP"));
+        cplex.addEq(premiumPetrolOrigin, 0);
 
+        IloLinearNumExpr regularPetrolOrigin = cplex.linearNumExpr();
+        regularPetrolOrigin.addTerm(1, getVariable("RP"));
+        regularPetrolOrigin.addTerm(-1, getVariable("LNRe"));
+        regularPetrolOrigin.addTerm(-1, getVariable("MNRe"));
+        regularPetrolOrigin.addTerm(-1, getVariable("HNRe"));
+        regularPetrolOrigin.addTerm(-1, getVariable("RGRe"));
+        regularPetrolOrigin.addTerm(-1, getVariable("CGRe"));
+        cplex.addEq(regularPetrolOrigin, 0);
 
+        IloLinearNumExpr premiumOctane = cplex.linearNumExpr();
+        premiumOctane.addTerm(-4, getVariable("LNP"));
+        premiumOctane.addTerm(-14, getVariable("MNP"));
+        premiumOctane.addTerm(-24, getVariable("HNP"));
+        premiumOctane.addTerm(21, getVariable("RGP"));
+        premiumOctane.addTerm(11, getVariable("CGP"));
+        cplex.addGe(premiumOctane, 0);
+
+        IloLinearNumExpr regularOctane = cplex.linearNumExpr();
+        regularOctane.addTerm(6, getVariable("LNRe"));
+        regularOctane.addTerm(-4, getVariable("MNRe"));
+        regularOctane.addTerm(-14, getVariable("HNRe"));
+        regularOctane.addTerm(31, getVariable("RGRe"));
+        regularOctane.addTerm(21, getVariable("CGRe"));
+        cplex.addGe(regularOctane, 0);
+
+        IloLinearNumExpr petrolRatio = cplex.linearNumExpr();
+        petrolRatio.addTerm(1, getVariable("PP"));
+        petrolRatio.addTerm(-0.4, getVariable("RP"));
+        cplex.addGe(petrolRatio, 0);
+
+        //Jet fuel restrictions
+        IloLinearNumExpr jetFuelOrigin = cplex.linearNumExpr();
+        jetFuelOrigin.addTerm(1, getVariable("JF"));
+        jetFuelOrigin.addTerm(-1, getVariable("LiOJF"));
+        jetFuelOrigin.addTerm(-1, getVariable("HOJF"));
+        jetFuelOrigin.addTerm(-1, getVariable("COJF"));
+        jetFuelOrigin.addTerm(-1, getVariable("RJF"));
+        cplex.addEq(jetFuelOrigin, 0);
+
+        IloLinearNumExpr jetFuelVapour = cplex.linearNumExpr();
+        jetFuelVapour.addTerm(-0.4, getVariable("HOJF"));
+        jetFuelVapour.addTerm(0.5, getVariable("COJF"));
+        jetFuelVapour.addTerm(-0.95, getVariable("RJF"));
+        cplex.addLe(jetFuelVapour, 0);
+        //Fuel oil restrictions
+        IloLinearNumExpr fuelOilOrigin = cplex.linearNumExpr();
+        fuelOilOrigin.addTerm(18, getVariable("FO"));
+        fuelOilOrigin.addTerm(-10, getVariable("LiOFO"));
+        fuelOilOrigin.addTerm(-3, getVariable("HOFO"));
+        fuelOilOrigin.addTerm(-4, getVariable("COFO"));
+        fuelOilOrigin.addTerm(-1, getVariable("RFO"));
+        cplex.addEq(fuelOilOrigin, 0);
+        //Lube oil restrictions
+        IloLinearNumExpr lubeOilOrigin = cplex.linearNumExpr();
+        lubeOilOrigin.addTerm(1, getVariable("LO"));
+        lubeOilOrigin.addTerm(-0.5, getVariable("RLO"));
+        cplex.addEq(lubeOilOrigin, 0);
+
+        IloLinearNumExpr lubeOilUpperLimit = cplex.linearNumExpr();
+        lubeOilUpperLimit.addTerm(1, getVariable("LO"));
+        cplex.addLe(lubeOilUpperLimit, 1000);
+
+        IloLinearNumExpr lubeOilLowerLimit = cplex.linearNumExpr();
+        lubeOilLowerLimit.addTerm(1, getVariable("LO"));
+        cplex.addGe(lubeOilLowerLimit, 500);
+
+        IloLinearNumExpr objective = cplex.linearNumExpr();
+        objective.addTerm(700, getVariable("PP"));
+        objective.addTerm(600, getVariable("RP"));
+        objective.addTerm(400, getVariable("JF"));
+        objective.addTerm(350, getVariable("FO"));
+        objective.addTerm(150, getVariable("LO"));
+
+        cplex.addObjective(IloObjectiveSense.Maximize, objective);
     }
 }
