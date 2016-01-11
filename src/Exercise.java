@@ -30,9 +30,10 @@ public abstract class Exercise
         return variables.get(name);
     }
 
-    protected void setVariable(String name, IloNumVar variable)
+    protected IloNumVar setVariable(String name, IloNumVar variable)
     {
         variables.put(name, variable);
+        return variable;
     }
 
     public abstract void setUpModel(IloCplex cplex) throws IloException;

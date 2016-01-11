@@ -5,9 +5,13 @@ import ilog.cplex.IloCplex;
 
 public class Exercise12_01 extends Exercise
 {
+    //To set up all the variables, months will go 1 to 6
+    //TODO: find a better way to handle all the variables and their references
     public enum Kind {
         Bought, Refined, Saved
     }
+
+    protected String[] oils = new String[]{"Veg1", "Veg2", "Oil1", "Oil2", "Oil3"};
 
     private static final double[][] PRICES = {
                 {110, 120, 130, 110, 115},
@@ -21,10 +25,6 @@ public class Exercise12_01 extends Exercise
     @Override
     public void setUpModel(IloCplex cplex) throws IloException
     {
-        //To set up all the variables, months will go 1 to 6
-        //TODO: find a better way to handle all the variables and their references
-        String[] oils = new String[]{"Veg1", "Veg2", "Oil1", "Oil2", "Oil3"};
-        //To hold the var references once in cplex by name
 
         //Set up of every variable
         for(int i = 1; i <= 6; i++)
@@ -120,7 +120,7 @@ public class Exercise12_01 extends Exercise
         return PRICES[month-1][oil];
     }
 
-    private static String getVariableName(String oil, Kind kind, int month)
+    protected static String getVariableName(String oil, Kind kind, int month)
     {
         return String.format("%s_%s_%s", month, oil, kind);
     }
