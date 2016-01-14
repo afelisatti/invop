@@ -3,7 +3,7 @@ import ilog.concert.IloLinearNumExpr;
 import ilog.concert.IloObjectiveSense;
 import ilog.cplex.IloCplex;
 
-public class Exercise12_6 extends Exercise
+public class Exercise12_06 extends Exercise
 {
 
     private String[] names = new String[]
@@ -16,12 +16,12 @@ public class Exercise12_6 extends Exercise
                     "LNRe", "MNRe", "HNRe",// (light, medium and heavy naphta regular)
                     "RGP", "RGRe",// (reformed gasoline petrol and regular)
                     "LiO", "HO",// (light and heavy oils)
-                    "LiOJF", "LiOFO", "LiOC",// (light oil jet fuel, fuel oil and cracked oil)
-                    "HOJF", "HOFO", "HOC",// (heavy oil jet fuel, fuel oil and cracked oil)
+                    "LiOJF", "LiOC",// (light oil jet fuel and cracked oil)
+                    "HOJF", "HOC",// (heavy oil jet fuel and cracked oil)
                     "R",// (residuum)
-                    "RJF", "RFO", "RLO",// (residuum jet fuel, fuel oil and lube oil)
+                    "RJF", "RLO",// (residuum jet fuel and lube oil)
                     "CG", "CO",// (cracked gasoline and oil)
-                    "COJF", "COFO",// (cracked oil jet fuel and fuel oil)
+                    "COJF",// (cracked oil jet fuel)
                     "CGP", "CGRe",// (cracked gasoline petrol and regular)
                     "PP", "RP", "JF", "FO", "LO"// (premium petrol, regular petrol, jet fuel, fuel oil, lube oil)
             };
@@ -47,46 +47,57 @@ public class Exercise12_6 extends Exercise
         crudeLimit.addTerm(1, getVariable("C2"));
         cplex.addLe(crudeLimit, 45000);
         //Distillation restrictions
-        IloLinearNumExpr crude1Dist = cplex.linearNumExpr();
-        crude1Dist.addTerm(0.95, getVariable("C1"));
-        crude1Dist.addTerm(-0.1, getVariable("LN"));
-        crude1Dist.addTerm(-0.2, getVariable("MN"));
-        crude1Dist.addTerm(-0.2, getVariable("HN"));
-        crude1Dist.addTerm(-0.12, getVariable("LiO"));
-        crude1Dist.addTerm(-0.2, getVariable("HO"));
-        crude1Dist.addTerm(-0.13, getVariable("R"));
-        cplex.addEq(crude1Dist, 0);
-
-        IloLinearNumExpr crude2Dist = cplex.linearNumExpr();
-        crude2Dist.addTerm(0.97, getVariable("C2"));
-        crude2Dist.addTerm(-0.15, getVariable("LN"));
-        crude2Dist.addTerm(-0.25, getVariable("MN"));
-        crude2Dist.addTerm(-0.18, getVariable("HN"));
-        crude2Dist.addTerm(-0.08, getVariable("LiO"));
-        crude2Dist.addTerm(-0.19, getVariable("HO"));
-        crude2Dist.addTerm(-0.12, getVariable("R"));
-        cplex.addEq(crude2Dist, 0);
-        //Naphtha restrictions
         IloLinearNumExpr lightNaphtha = cplex.linearNumExpr();
         lightNaphtha.addTerm(1, getVariable("LN"));
-        lightNaphtha.addTerm(-1, getVariable("LNR"));
-        lightNaphtha.addTerm(-1, getVariable("LNP"));
-        lightNaphtha.addTerm(-1, getVariable("LNRe"));
+        lightNaphtha.addTerm(-0.1, getVariable("C1"));
+        lightNaphtha.addTerm(-0.15, getVariable("C2"));
         cplex.addEq(lightNaphtha, 0);
-
         IloLinearNumExpr mediumNaphtha = cplex.linearNumExpr();
         mediumNaphtha.addTerm(1, getVariable("MN"));
-        mediumNaphtha.addTerm(-1, getVariable("MNR"));
-        mediumNaphtha.addTerm(-1, getVariable("MNP"));
-        mediumNaphtha.addTerm(-1, getVariable("MNRe"));
+        mediumNaphtha.addTerm(-0.2, getVariable("C1"));
+        mediumNaphtha.addTerm(-0.25, getVariable("C2"));
         cplex.addEq(mediumNaphtha, 0);
-
         IloLinearNumExpr heavyNaphtha = cplex.linearNumExpr();
         heavyNaphtha.addTerm(1, getVariable("HN"));
-        heavyNaphtha.addTerm(-1, getVariable("HNR"));
-        heavyNaphtha.addTerm(-1, getVariable("HNP"));
-        heavyNaphtha.addTerm(-1, getVariable("HNRe"));
+        heavyNaphtha.addTerm(-0.2, getVariable("C1"));
+        heavyNaphtha.addTerm(-0.18, getVariable("C2"));
         cplex.addEq(heavyNaphtha, 0);
+        IloLinearNumExpr lightOil = cplex.linearNumExpr();
+        lightOil.addTerm(1, getVariable("LiO"));
+        lightOil.addTerm(-0.12, getVariable("C1"));
+        lightOil.addTerm(-0.08, getVariable("C2"));
+        cplex.addEq(lightOil, 0);
+        IloLinearNumExpr heavyOil = cplex.linearNumExpr();
+        heavyOil.addTerm(1, getVariable("HO"));
+        heavyOil.addTerm(-0.2, getVariable("C1"));
+        heavyOil.addTerm(-0.19, getVariable("C2"));
+        cplex.addEq(heavyOil, 0);
+        IloLinearNumExpr residuum = cplex.linearNumExpr();
+        residuum.addTerm(1, getVariable("R"));
+        residuum.addTerm(-0.13, getVariable("C1"));
+        residuum.addTerm(-0.12, getVariable("C2"));
+        cplex.addEq(residuum, 0);
+        //Naphtha restrictions
+        IloLinearNumExpr lightNaphthaDestination = cplex.linearNumExpr();
+        lightNaphthaDestination.addTerm(1, getVariable("LN"));
+        lightNaphthaDestination.addTerm(-1, getVariable("LNR"));
+        lightNaphthaDestination.addTerm(-1, getVariable("LNP"));
+        lightNaphthaDestination.addTerm(-1, getVariable("LNRe"));
+        cplex.addEq(lightNaphthaDestination, 0);
+
+        IloLinearNumExpr mediumNaphthaDestination = cplex.linearNumExpr();
+        mediumNaphthaDestination.addTerm(1, getVariable("MN"));
+        mediumNaphthaDestination.addTerm(-1, getVariable("MNR"));
+        mediumNaphthaDestination.addTerm(-1, getVariable("MNP"));
+        mediumNaphthaDestination.addTerm(-1, getVariable("MNRe"));
+        cplex.addEq(mediumNaphthaDestination, 0);
+
+        IloLinearNumExpr heavyNaphthaDestination = cplex.linearNumExpr();
+        heavyNaphthaDestination.addTerm(1, getVariable("HN"));
+        heavyNaphthaDestination.addTerm(-1, getVariable("HNR"));
+        heavyNaphthaDestination.addTerm(-1, getVariable("HNP"));
+        heavyNaphthaDestination.addTerm(-1, getVariable("HNRe"));
+        cplex.addEq(heavyNaphthaDestination, 0);
         //Reformed naphtha limit
         IloLinearNumExpr naphthaLimit = cplex.linearNumExpr();
         naphthaLimit.addTerm(1, getVariable("LNR"));
@@ -107,23 +118,23 @@ public class Exercise12_6 extends Exercise
         reformedGasolineDestination.addTerm(-1, getVariable("RGRe"));
         cplex.addEq(reformedGasolineDestination, 0);
         //Oil restrictions
-        IloLinearNumExpr lightOil = cplex.linearNumExpr();
-        lightOil.addTerm(1, getVariable("LiO"));
-        lightOil.addTerm(-1, getVariable("LiOJF"));
-        lightOil.addTerm(-1, getVariable("LiOFO"));
-        lightOil.addTerm(-1, getVariable("LiOC"));
-        cplex.addEq(lightOil, 0);
+        IloLinearNumExpr lightOilDestination = cplex.linearNumExpr();
+        lightOilDestination.addTerm(1, getVariable("LiO"));
+        lightOilDestination.addTerm(-1, getVariable("LiOJF"));
+        lightOilDestination.addTerm(-0.55, getVariable("FO"));
+        lightOilDestination.addTerm(-1, getVariable("LiOC"));
+        cplex.addEq(lightOilDestination, 0);
 
-        IloLinearNumExpr heavyOil = cplex.linearNumExpr();
-        heavyOil.addTerm(1, getVariable("HO"));
-        heavyOil.addTerm(-1, getVariable("HOJF"));
-        heavyOil.addTerm(-1, getVariable("HOFO"));
-        heavyOil.addTerm(-1, getVariable("HOC"));
-        cplex.addEq(heavyOil, 0);
+        IloLinearNumExpr heavyOilDestination = cplex.linearNumExpr();
+        heavyOilDestination.addTerm(1, getVariable("HO"));
+        heavyOilDestination.addTerm(-1, getVariable("HOJF"));
+        heavyOilDestination.addTerm(-0.16, getVariable("FO"));
+        heavyOilDestination.addTerm(-1, getVariable("HOC"));
+        cplex.addEq(heavyOilDestination, 0);
 
         IloLinearNumExpr oilLimit = cplex.linearNumExpr();
-        oilLimit.addTerm(1, getVariable("LiO"));
-        oilLimit.addTerm(1, getVariable("HO"));
+        oilLimit.addTerm(1, getVariable("LiOC"));
+        oilLimit.addTerm(1, getVariable("HOC"));
         cplex.addLe(oilLimit, 8000);
         //Cracking restrictions
         IloLinearNumExpr crackedOilOrigin = cplex.linearNumExpr();
@@ -135,7 +146,7 @@ public class Exercise12_6 extends Exercise
         IloLinearNumExpr crackedOilDestination = cplex.linearNumExpr();
         crackedOilDestination.addTerm(1, getVariable("CO"));
         crackedOilDestination.addTerm(-1, getVariable("COJF"));
-        crackedOilDestination.addTerm(-1, getVariable("COFO"));
+        crackedOilDestination.addTerm(-0.22, getVariable("FO"));
         cplex.addEq(crackedOilDestination, 0);
 
         IloLinearNumExpr crackedGasolineOrigin = cplex.linearNumExpr();
@@ -153,7 +164,7 @@ public class Exercise12_6 extends Exercise
         IloLinearNumExpr residuumDestination = cplex.linearNumExpr();
         residuumDestination.addTerm(1, getVariable("R"));
         residuumDestination.addTerm(-1, getVariable("RJF"));
-        residuumDestination.addTerm(-1, getVariable("RFO"));
+        residuumDestination.addTerm(-0.05, getVariable("FO"));
         residuumDestination.addTerm(-1, getVariable("RLO"));
         cplex.addEq(residuumDestination, 0);
         //Petrol restrictions
@@ -210,14 +221,6 @@ public class Exercise12_6 extends Exercise
         jetFuelVapour.addTerm(0.5, getVariable("COJF"));
         jetFuelVapour.addTerm(-0.95, getVariable("RJF"));
         cplex.addLe(jetFuelVapour, 0);
-        //Fuel oil restrictions
-        IloLinearNumExpr fuelOilOrigin = cplex.linearNumExpr();
-        fuelOilOrigin.addTerm(18, getVariable("FO"));
-        fuelOilOrigin.addTerm(-10, getVariable("LiOFO"));
-        fuelOilOrigin.addTerm(-3, getVariable("HOFO"));
-        fuelOilOrigin.addTerm(-4, getVariable("COFO"));
-        fuelOilOrigin.addTerm(-1, getVariable("RFO"));
-        cplex.addEq(fuelOilOrigin, 0);
         //Lube oil restrictions
         IloLinearNumExpr lubeOilOrigin = cplex.linearNumExpr();
         lubeOilOrigin.addTerm(1, getVariable("LO"));
