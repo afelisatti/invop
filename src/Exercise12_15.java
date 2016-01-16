@@ -23,8 +23,8 @@ public class Exercise12_15 extends Exercise
     {
         int[] demand = new int[]{15000, 30000, 25000, 40000, 27000};
         int[] hours = new int[]{6, 3, 6, 3, 6};
-        int[] maximumProduction = new int[]{850, 1250, 1500};
-        int[] minimumProduction = new int[]{15000, 30000, 25000};
+        int[] minimumProduction = new int[]{850, 1250, 1500};
+        int[] maximumProduction = new int[]{15000, 30000, 25000};
         int[] availableUnits = new int[]{12, 10, 5};
         int[] minimumCost = new int[]{1000, 2600, 3000};
         int[] startingCost = new int[]{2000, 1000, 500};
@@ -44,23 +44,24 @@ public class Exercise12_15 extends Exercise
             {
                 //Set up variables
                 String amountName = getVariableName(Variable.Amount, period, type);
-                IloNumVar amount = setVariable(amountName, cplex.intVar(0, 15, amountName));
+                IloNumVar amount = setVariable(amountName, cplex.intVar(0, Integer.MAX_VALUE, amountName));
                 String startedName = getVariableName(Variable.Started, period, type);
-                IloNumVar start = setVariable(startedName, cplex.intVar(0, 30, startedName));
+                IloNumVar start = setVariable(startedName, cplex.intVar(0, Integer.MAX_VALUE, startedName));
                 String wattsName = getVariableName(Variable.Watts, period, type);
                 IloNumVar watts = setVariable(wattsName, cplex.numVar(0.0, Double.MAX_VALUE, wattsName));
 
                 //Started units logic
                 IloLinearNumExpr startedUnits = cplex.linearNumExpr();
                 startedUnits.addTerm(1, start);
-                startedUnits.addTerm(-1, amount);
+                startedUnits.addTerm(-1.0, amount);
                 if (period == 1)
                 {
                     cplex.addEq(startedUnits, 0);
+                    //cplex.addGe(startedUnits, 5);
                 }
                 else
                 {
-                    startedUnits.addTerm(1, getVariable(getVariableName(Variable.Amount, period-1, type)));
+                    startedUnits.addTerm(1.0, getVariable(getVariableName(Variable.Amount, period-1, type)));
                     cplex.addGe(startedUnits, 0);
                 }
 
@@ -88,12 +89,11 @@ public class Exercise12_15 extends Exercise
                 satisfyDemand.addTerm(1, watts);
 
                 satisfyExtendedDemand.addTerm(maximumProduction[type - 1], amount);
-                satisfyExtendedDemand.addTerm(-1 , watts);
             }
 
             cplex.addGe(satisfyDemand, demand[period - 1]);
 
-            cplex.addGe(satisfyExtendedDemand, 0.15*demand[period-1]);
+            cplex.addGe(satisfyExtendedDemand, 1.15*demand[period-1]);
         }
 
         cplex.addObjective(IloObjectiveSense.Minimize, objective);

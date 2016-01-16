@@ -3,7 +3,7 @@ import ilog.cplex.IloCplex;
 
 public class Runner
 {
-    private static Exercise[] exercises = new Exercise[]{new Exercise12_01(), new Exercise12_02(), new Exercise12_06(), new Exercise12_13()};
+    private static Exercise[] exercises = new Exercise[]{new Exercise12_01(), new Exercise12_02(), new Exercise12_06(), new Exercise12_13(), new Exercise12_15()};
 
     public static void main(String[] args) throws IloException
     {
