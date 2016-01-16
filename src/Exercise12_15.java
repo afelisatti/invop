@@ -6,6 +6,7 @@
  */
 
 import ilog.concert.IloException;
+import ilog.concert.IloIntVar;
 import ilog.concert.IloLinearNumExpr;
 import ilog.concert.IloNumVar;
 import ilog.concert.IloObjectiveSense;
@@ -24,8 +25,10 @@ public class Exercise12_15 extends Exercise
         int[] demand = new int[]{15000, 30000, 25000, 40000, 27000};
         int[] hours = new int[]{6, 3, 6, 3, 6};
         int[] minimumProduction = new int[]{850, 1250, 1500};
-        int[] maximumProduction = new int[]{15000, 30000, 25000};
+        int[] maximumProduction = new int[]{2000, 1750, 4000};
         int[] availableUnits = new int[]{12, 10, 5};
+        //Assumed running units on previous day based on results using 0 units
+        int[] previousDay = new int[]{12, 9, 0};
         int[] minimumCost = new int[]{1000, 2600, 3000};
         int[] startingCost = new int[]{2000, 1000, 500};
         Double[] price = new Double[]{2.0, 1.3, 3.0};
@@ -44,9 +47,9 @@ public class Exercise12_15 extends Exercise
             {
                 //Set up variables
                 String amountName = getVariableName(Variable.Amount, period, type);
-                IloNumVar amount = setVariable(amountName, cplex.intVar(0, Integer.MAX_VALUE, amountName));
+                IloIntVar amount = (IloIntVar) setVariable(amountName, cplex.intVar(0, Integer.MAX_VALUE, amountName));
                 String startedName = getVariableName(Variable.Started, period, type);
-                IloNumVar start = setVariable(startedName, cplex.intVar(0, Integer.MAX_VALUE, startedName));
+                IloIntVar start = (IloIntVar) setVariable(startedName, cplex.intVar(0, Integer.MAX_VALUE, startedName));
                 String wattsName = getVariableName(Variable.Watts, period, type);
                 IloNumVar watts = setVariable(wattsName, cplex.numVar(0.0, Double.MAX_VALUE, wattsName));
 
@@ -56,12 +59,11 @@ public class Exercise12_15 extends Exercise
                 startedUnits.addTerm(-1.0, amount);
                 if (period == 1)
                 {
-                    cplex.addEq(startedUnits, 0);
-                    //cplex.addGe(startedUnits, 5);
+                    cplex.addEq(startedUnits, previousDay[type-1]);
                 }
                 else
                 {
-                    startedUnits.addTerm(1.0, getVariable(getVariableName(Variable.Amount, period-1, type)));
+                    startedUnits.addTerm(1, getVariable(getVariableName(Variable.Amount, period-1, type)));
                     cplex.addGe(startedUnits, 0);
                 }
 
