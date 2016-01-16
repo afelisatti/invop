@@ -5,7 +5,7 @@ import ilog.cplex.IloCplex;
 
 import java.util.HashMap;
 
-public class Exercise12_13 extends Exercise {
+public abstract class Exercise12_13 extends Exercise {
 
     protected String div1 = "D1_";
     protected int[] oilGalons = new int[] {9,13,14,17,18,19,23,21,9,11,17,18,18,17,22,24,36,43,6,15,15,25,39};
