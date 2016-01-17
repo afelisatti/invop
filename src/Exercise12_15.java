@@ -19,11 +19,12 @@ public class Exercise12_15 extends Exercise
         Amount, Started, Watts
     }
 
+    protected int[] hours = new int[]{6, 3, 6, 3, 6};
+    private int[] demand = new int[]{15000, 30000, 25000, 40000, 27000};
+
     @Override
     public void setUpModel(IloCplex cplex) throws IloException
     {
-        int[] demand = new int[]{15000, 30000, 25000, 40000, 27000};
-        int[] hours = new int[]{6, 3, 6, 3, 6};
         int[] minimumProduction = new int[]{850, 1250, 1500};
         int[] maximumProduction = new int[]{2000, 1750, 4000};
         int[] availableUnits = new int[]{12, 10, 5};
@@ -93,22 +94,24 @@ public class Exercise12_15 extends Exercise
                 satisfyExtendedDemand.addTerm(maximumProduction[type - 1], amount);
             }
 
-            addDemandConstraints(cplex, demand[period - 1], satisfyDemand, satisfyExtendedDemand);
+            addDemandConstraints(cplex, period, satisfyDemand, satisfyExtendedDemand);
+
+            addObjectiveTerms(cplex, objective, period);
         }
 
-        addObjective(cplex, objective);
-    }
-
-    protected void addObjective(IloCplex cplex, IloLinearNumExpr objective) throws IloException
-    {
         cplex.addObjective(IloObjectiveSense.Minimize, objective);
     }
 
-    protected void addDemandConstraints(IloCplex cplex, int demand, IloLinearNumExpr satisfyDemand, IloLinearNumExpr satisfyExtendedDemand) throws IloException
+    protected void addObjectiveTerms(IloCplex cplex, IloLinearNumExpr objective, int period) throws IloException
     {
-        cplex.addGe(satisfyDemand, demand);
+        return;
+    }
 
-        cplex.addGe(satisfyExtendedDemand, 1.15 * demand);
+    protected void addDemandConstraints(IloCplex cplex, int period, IloLinearNumExpr satisfyDemand, IloLinearNumExpr satisfyExtendedDemand) throws IloException
+    {
+        cplex.addGe(satisfyDemand, demand[period-1]);
+
+        cplex.addGe(satisfyExtendedDemand, 1.15 * demand[period-1]);
     }
 
     private String getVariableName(Variable variable, int period, int type)
