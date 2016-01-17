@@ -28,7 +28,7 @@ public class Exercise12_15 extends Exercise
         int[] maximumProduction = new int[]{2000, 1750, 4000};
         int[] availableUnits = new int[]{12, 10, 5};
         //Assumed running units on previous day based on results using 0 units
-        int[] previousDay = new int[]{12, 9, 0};
+        int[] previousDay = new int[]{0, 0, 0};
         int[] minimumCost = new int[]{1000, 2600, 3000};
         int[] startingCost = new int[]{2000, 1000, 500};
         Double[] price = new Double[]{2.0, 1.3, 3.0};
@@ -93,12 +93,22 @@ public class Exercise12_15 extends Exercise
                 satisfyExtendedDemand.addTerm(maximumProduction[type - 1], amount);
             }
 
-            cplex.addGe(satisfyDemand, demand[period - 1]);
-
-            cplex.addGe(satisfyExtendedDemand, 1.15*demand[period-1]);
+            addDemandConstraints(cplex, demand[period - 1], satisfyDemand, satisfyExtendedDemand);
         }
 
+        addObjective(cplex, objective);
+    }
+
+    protected void addObjective(IloCplex cplex, IloLinearNumExpr objective) throws IloException
+    {
         cplex.addObjective(IloObjectiveSense.Minimize, objective);
+    }
+
+    protected void addDemandConstraints(IloCplex cplex, int demand, IloLinearNumExpr satisfyDemand, IloLinearNumExpr satisfyExtendedDemand) throws IloException
+    {
+        cplex.addGe(satisfyDemand, demand);
+
+        cplex.addGe(satisfyExtendedDemand, 1.15 * demand);
     }
 
     private String getVariableName(Variable variable, int period, int type)
