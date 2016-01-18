@@ -15,10 +15,33 @@ public class Exercise12_23 extends Exercise
 {
     Double[][] distances = new Double[21][21];
     int[] demand = new int[]{0, 5, 4, 3, 6, 7, 3, 4, 6, 5, 4, 7, 3, 4, 5, 6, 8, 5, 7, 6, 6};
-
+    Point[] farmLocations = new Point[]{
+            new Point(0,0),
+            new Point(-3,3),
+            new Point(1,11),
+            new Point(4,7),
+            new Point(-5,9),
+            new Point(-5,-2),
+            new Point(-4,-7),
+            new Point(6,0),
+            new Point(3,-6),
+            new Point(-1,-3),
+            new Point(0,-6),
+            new Point(6,4),
+            new Point(2,5),
+            new Point(-2,8),
+            new Point(6,10),
+            new Point(1,8),
+            new Point(-3,1),
+            new Point(-6,5),
+            new Point(2,9),
+            new Point(-6,-5),
+            new Point(5,-4)
+    };
     @Override
     public void setUpModel(IloCplex cplex) throws IloException
     {
+        resolveDistances();
         //add variables, constraints and objective
         IloLinearNumExpr objective = cplex.linearNumExpr();
 
@@ -106,12 +129,38 @@ public class Exercise12_23 extends Exercise
 
     private Double getDistance(int i, int j)
     {
-        return 1.0;
-        //return distances[i][j];
+        //return 1.0;
+        //because its Zero-based
+        return distances[i-1][j-1];
     }
 
     private void resolveDistances()
     {
-        //here we should take the coordinates array and use it to populate the distances matrix
+        for(int i = 0; i<21; i++){
+            for (int j = 0; j<i ; j++){
+                double distance = calculateSquareDistanceBetween(farmLocations[i],farmLocations[j]);
+                distances[i][j] = distance;
+                distances[j][i] = distance;
+            }
+            distances[i][i]= 0.0;
+        }
+    }
+    private double calculateSquareDistanceBetween(Point point1, Point point2){
+        return (point1.xAxis() - point2.xAxis()^2) + (point1.yAxis() - point2.yAxis()^2);
+    }
+    private class Point {
+        protected int x;
+        protected int y;
+
+        Point(int xComponent, int yComponent){
+            x = xComponent;
+            y = yComponent;
+        }
+        public int xAxis(){
+            return x;
+        }
+        public int yAxis(){
+            return y;
+        }
     }
 }
