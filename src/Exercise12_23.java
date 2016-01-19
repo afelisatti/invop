@@ -5,11 +5,9 @@
  * LICENSE.txt file.
  */
 
-import ilog.concert.IloException;
-import ilog.concert.IloIntVar;
-import ilog.concert.IloLinearNumExpr;
-import ilog.concert.IloObjectiveSense;
+import ilog.concert.*;
 import ilog.cplex.IloCplex;
+import ilog.concert.IloException;
 
 public class Exercise12_23 extends Exercise
 {
@@ -84,6 +82,11 @@ public class Exercise12_23 extends Exercise
                 {
                     if (farmFrom != farmTo)
                     {
+                        //IloLinearNumExpr cantGoThereAndBackDay = cplex.linearNumExpr();
+                        //cantGoThereAndBackDay.addTerm(1,getVariable(getTour(day,farmTo,farmFrom)));
+                        //cantGoThereAndBackDay.addTerm(1,getVariable(getTour(day,farmFrom,farmTo)));
+                        //cplex.addLe(1,cantGoThereAndBackDay);
+
                         farmPrecedes.addTerm(1, getVariable(getTour(day, farmFrom, farmTo)));
                     }
                 }
@@ -146,7 +149,7 @@ public class Exercise12_23 extends Exercise
         }
     }
     private double calculateSquareDistanceBetween(Point point1, Point point2){
-        return (point1.xAxis() - point2.xAxis())^2 + (point1.yAxis() - point2.yAxis())^2;
+        return Math.pow((double)(point1.xAxis() - point2.xAxis()),2.0) + Math.pow((double)point1.yAxis() - point2.yAxis(),2.0);
     }
     private class Point {
         protected int x;
@@ -161,6 +164,23 @@ public class Exercise12_23 extends Exercise
         }
         public int yAxis(){
             return y;
+        }
+    }
+    @Override
+    public void getPostExecutionData(IloCplex cplex) throws IloException{//ilog.cplex.IloCplex.UnknownObjectException{
+        for(int day = 1; day <=2; day++){
+            System.out.println("Path day "+String.valueOf(day)+":");
+            for (int farmTo = 1; farmTo<=21;farmTo++){
+                for(int farmFrom = 1; farmFrom<=21;farmFrom++){
+                    if(farmTo != farmFrom){
+                        String tour = getTour(1,farmFrom,farmTo);
+                        IloNumVar cplexVar = getVariable(tour);
+                        double visited = cplex.getValue(cplexVar);
+                        if (visited > 0)
+                            System.out.println(tour);
+                        }
+                }
+            }
         }
     }
 }

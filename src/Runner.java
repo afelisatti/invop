@@ -22,6 +22,8 @@ public class Runner
             System.out.println("Results:");
             exercise.showResults(cplex);
             showDelimiter();
+            exercise.getPostExecutionData(cplex);
+            showDelimiter();
         }
 
     }

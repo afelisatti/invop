@@ -43,5 +43,7 @@ public abstract class Exercise
     {
         return;
     }
+    public void getPostExecutionData(IloCplex cplex) throws IloException    {    }
+
 }
 
