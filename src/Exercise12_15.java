@@ -10,6 +10,7 @@ import ilog.concert.IloIntVar;
 import ilog.concert.IloLinearNumExpr;
 import ilog.concert.IloNumVar;
 import ilog.concert.IloObjectiveSense;
+import ilog.concert.IloRange;
 import ilog.cplex.IloCplex;
 
 public class Exercise12_15 extends Exercise
@@ -21,6 +22,7 @@ public class Exercise12_15 extends Exercise
 
     protected int[] hours = new int[]{6, 3, 6, 3, 6};
     private int[] demand = new int[]{15000, 30000, 25000, 40000, 27000};
+    private IloRange[] demandConstraints = new IloRange[5];
 
     @Override
     public void setUpModel(IloCplex cplex) throws IloException
@@ -109,7 +111,7 @@ public class Exercise12_15 extends Exercise
 
     protected void addDemandConstraints(IloCplex cplex, int period, IloLinearNumExpr satisfyDemand, IloLinearNumExpr satisfyExtendedDemand) throws IloException
     {
-        cplex.addGe(satisfyDemand, demand[period-1]);
+        demandConstraints[period-1] = cplex.addGe(satisfyDemand, demand[period-1]);
 
         cplex.addGe(satisfyExtendedDemand, 1.15 * demand[period-1]);
     }
@@ -117,5 +119,15 @@ public class Exercise12_15 extends Exercise
     private String getVariableName(Variable variable, int period, int type)
     {
         return String.format("%s_Type%s_Period%s", variable, type, period);
+    }
+
+    @Override
+    public void showDuals(IloCplex cplex) throws IloException
+    {
+        //System.out.println("Duals: ");
+        //for (int period = 0; period <= 4; period++)
+        //{
+        //    System.out.println(String.format("Period%s = %s", period + 1, cplex.getDual(demandConstraints[period])));
+        //}
     }
 }
