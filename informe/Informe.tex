@@ -1,0 +1,125 @@
+\documentclass[11pt, a4paper, spanish]{article}
+
+%%%%%%%%%% COMIENZO DEL PREAMBULO %%%%%%%%%%
+
+%Info sobre este documento
+\author{Ana Felisatti}
+\title{Trabajo Pr'actico de Investigaci'on Operativa}
+
+%\usepackage{infostyle}                                                  % provee un look & feel similar a un documento Word
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}  % m\'argenes
+\usepackage[ansinew]{inputenc}                                           % permite que los acentos del estilo \'a\'e\'i\'o\'u salgan joya
+\usepackage[spanish, activeacute]{babel}                                 % idioma espa\~{n}ol, acentos f\'aciles y deletreo de palabras
+\usepackage{indentfirst}                                                 % permite indentar un parrafo a mano
+\usepackage{caratula}                                                    % incluye caratula est\'andar
+\usepackage{graphicx}                                                    % permite insertar gr\'aficos
+\usepackage{color}                                                       % permite el uso de colores en el documento
+\usepackage[pdfcreator={TexLive!, LaTeX2e con TeXnicCenter},
+			pdftitle={Investigaci'on Operativa},
+			pdfsubject={Trabajo Practico},
+			pdfstartview=FitH,            % Fits the width of the page to the window
+			bookmarksnumbered,            % los bookmarks numerados se ven mejor...
+			colorlinks,                   % links con bellos colores
+			linkcolor=magenta]            % permite cambiar el color de los links
+			{hyperref}                    % Permite jugar con algunas cosas que aparecer\'an en el PDF final
+\usepackage{hyperref}
+\usepackage{ulem}
+
+%\selectlanguage{spanish}
+
+\linespread{1.3}                    % interlineado equivalente al 1.5 l\'ineas de Word...
+\pagestyle{myheadings}              %encabezado personalizable con \markboth{}{}
+\markboth{}{Investigaci'on Operativa - Felisatti, Raffo}
+\headsep = 30pt                     % separaci\'on entre encabezado y comienzo del p\'arrafo
+
+%\addtolength{\oddsidemargin}{-2cm}	% configuracion IDEAL!!!
+%\addtolength{\textwidth}{4cm}
+%\addtolength{\textheight}{2cm}
+
+% macro 'todo' para To-Do's
+\def\todo#1{\textcolor{red}{#1}}
+
+% Macro 'borde' para un texto con borde
+\newsavebox{\fmbox}
+\newenvironment{borde}[1]
+{\begin{lrbox}{\fmbox}\begin{minipage}{#1}}
+{\end{minipage}\end{lrbox}\fbox{\usebox{\fmbox}}\\[10pt]}
+
+% para que la gramatica quede linda
+\newenvironment{xlist}[1]{%
+	\begin{list}{}{%
+		\settowidth{\labelwidth}{#1}
+		\setlength{\labelsep}{0.5cm}
+		\setlength{\leftmargin}{\labelwidth}
+		\addtolength{\leftmargin}{\labelsep}
+		\setlength{\rightmargin}{0pt}
+		\setlength{\parsep}{0.5ex plus0.2ex minus0.1ex}
+		\setlength{\itemsep}{0ex plus0.2ex}
+		}
+	}
+{\end{list}}%%%%%%%%%% FIN DEL PREAMBULO %%%%%%%%%%
+
+\begin{document}
+
+\materia{Investigaci'on Operativa}
+\titulo{Trabajo Pr\'actico}
+\subtitulo{}
+\grupo{}
+
+\integrante{Felisatti, Ana}{335/10}{anafelisatti@gmail.com}
+\integrante{Raffo, Diego Martin}{335/10}{enanodr@gmail.com}
+
+
+%\begin{center}
+%	\includegraphics[scale=0.35]{diagramas/chuck-norris-thumbs-up.png}\\
+%\end{center}
+
+
+\maketitle
+
+\thispagestyle{empty}
+
+\newpage
+
+% Conviene poner las secciones como diferentes archivos,
+% sobre todo cuando se trabaja en equipo.
+% Es m\'as f\'acil para sincronizar mediante control de versiones.
+\tableofcontents
+
+\newpage
+
+\input{ejercicio_1201}
+\input{ejercicio_1202}
+\input{ejercicio_1206}
+\input{ejercicio_1213}
+\input{ejercicio_1215}
+\input{ejercicio_1216}
+\input{ejercicio_1223}
+
+
+% BEGIN Ejemplos de uso
+
+	%\section{Una secci\'on}
+	%\label{sec:unaSeccion}
+	%Hola! Soy una Secci\'on
+	%	\subsection{Una subsecci\'on}
+	%		Y yo soy una subsecci\'on!!!
+	%		\subsubsection{Una subsubsecci\'on}
+	%			Y yo soy una sub-subsecci\'on!!!
+	%			\paragraph{Un p\'arrafo\\}
+	%				Y yo soy un p\'arrafo, porque no hay mas sub-sub-sub-subsecciones!!!
+
+	%\section{Otra secci\'on}
+	%	Como pudimos ver en la secci\'on \ref{sec:unaSeccion}, esto es una demo de una referencia a una secci\'on.
+	
+	%	Tambi\'en podemos hacer referencia a la p\'agina de la secci\'on:\\[10pt]
+	
+		% Ejemplo de uso de un borde (falta pulir para que no tire un warning!)
+	%	\begin{borde}{0.98\textwidth}
+	%		En la p\'agina \pageref{sec:unaSeccion}, hay una secci\'on pilla...
+	%	\end{borde}
+
+% END Ejemplos de uso
+
+
+\end{document}
