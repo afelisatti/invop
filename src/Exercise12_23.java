@@ -146,7 +146,7 @@ public class Exercise12_23 extends Exercise
         }
     }
     private double calculateSquareDistanceBetween(Point point1, Point point2){
-        return (point1.xAxis() - point2.xAxis()^2) + (point1.yAxis() - point2.yAxis()^2);
+        return (point1.xAxis() - point2.xAxis())^2 + (point1.yAxis() - point2.yAxis())^2;
     }
     private class Point {
         protected int x;
