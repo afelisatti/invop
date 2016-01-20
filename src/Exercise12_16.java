@@ -123,13 +123,13 @@ public class Exercise12_16 extends Exercise12_15
     protected void addDemandConstraints(IloCplex cplex, int period, IloLinearNumExpr satisfyDemand, IloLinearNumExpr satisfyExtendedDemand) throws IloException
     {
         //add new terms to both demand satisfaction constraints before adding them
-        satisfyDemand.addTerm(900 * hours[period - 1], getVariable(getSimpleName(Variable.RunHA, period)));
-        satisfyDemand.addTerm(1400 * hours[period - 1], getVariable(getSimpleName(Variable.RunHB, period)));
+        satisfyDemand.addTerm(900, getVariable(getSimpleName(Variable.RunHA, period)));
+        satisfyDemand.addTerm(1400, getVariable(getSimpleName(Variable.RunHB, period)));
         satisfyDemand.addTerm(-3000/hours[period - 1], getVariable(getSimpleName(Variable.Pumping, period)));
 
         satisfyExtendedDemand.addTerm(3000/hours[period - 1], getVariable(getSimpleName(Variable.Pumping, period)));
-        satisfyExtendedDemand.addTerm(900 * hours[period - 1], getVariable(getSimpleName(Variable.RunHA, period)));
-        satisfyExtendedDemand.addTerm(1400 * hours[period - 1], getVariable(getSimpleName(Variable.RunHB, period)));
+        satisfyExtendedDemand.addTerm(900, getVariable(getSimpleName(Variable.RunHA, period)));
+        satisfyExtendedDemand.addTerm(1400, getVariable(getSimpleName(Variable.RunHB, period)));
 
         super.addDemandConstraints(cplex, period, satisfyDemand, satisfyExtendedDemand);
     }

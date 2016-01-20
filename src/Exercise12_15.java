@@ -135,10 +135,11 @@ public class Exercise12_15 extends Exercise
     @Override
     public void showDuals(IloCplex cplex) throws IloException
     {
-        //System.out.println("Duals: ");
-        //for (int period = 0; period <= 4; period++)
-        //{
-        //    System.out.println(String.format("Period%s = %s", period + 1, cplex.getDual(demandConstraints[period])));
-        //}
+        System.out.println("Duals: ");
+        cplex.solveFixed();
+        for (int period = 0; period <= 4; period++)
+        {
+            System.out.println(String.format("Period%s = %s", period + 1, cplex.getDual(demandConstraints[period])));
+        }
     }
 }
