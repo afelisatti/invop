@@ -21,23 +21,38 @@ public class Exercise12_16 extends Exercise12_15
     @Override
     public void setUpModel(IloCplex cplex) throws IloException
     {
-        int[] previousDayHydro = new int[] {0,0};
-
-        //add new variables and their constraints
+        //Add new variables
         for (int period = 1; period <= 5; period++)
         {
             String reservoirName = getSimpleName(Variable.Reservoir, period);
-            IloNumVar reservoir = setVariable(reservoirName, cplex.numVar(0, Double.MAX_VALUE, reservoirName));
+            setVariable(reservoirName, cplex.numVar(0, Double.MAX_VALUE, reservoirName));
             String hydroAName = getSimpleName(Variable.RunHA, period);
-            IloIntVar hydroA = (IloIntVar) setVariable(hydroAName, cplex.boolVar(hydroAName));
+            setVariable(hydroAName, cplex.boolVar(hydroAName));
             String hydroBName = getSimpleName(Variable.RunHB, period);
-            IloIntVar hydroB = (IloIntVar) setVariable(hydroBName, cplex.boolVar(hydroBName));
+            setVariable(hydroBName, cplex.boolVar(hydroBName));
             String startAName = getSimpleName(Variable.StartHA, period);
-            IloIntVar startA = (IloIntVar) setVariable(startAName, cplex.boolVar(startAName));
+            setVariable(startAName, cplex.boolVar(startAName));
             String startBName = getSimpleName(Variable.StartHB, period);
-            IloIntVar startB = (IloIntVar) setVariable(startBName, cplex.boolVar(startBName));
+            setVariable(startBName, cplex.boolVar(startBName));
             String pumpingName = getSimpleName(Variable.Pumping, period);
-            IloNumVar pumping = setVariable(pumpingName, cplex.numVar(0, Double.MAX_VALUE,pumpingName));
+            setVariable(pumpingName, cplex.numVar(0, Double.MAX_VALUE,pumpingName));
+        }
+
+        //Add new constraints
+        for (int period = 1; period <= 5; period++)
+        {
+            String reservoirName = getSimpleName(Variable.Reservoir, period);
+            IloNumVar reservoir = getVariable(reservoirName);
+            String hydroAName = getSimpleName(Variable.RunHA, period);
+            IloIntVar hydroA = (IloIntVar) getVariable(hydroAName);
+            String hydroBName = getSimpleName(Variable.RunHB, period);
+            IloIntVar hydroB = (IloIntVar) getVariable(hydroBName);
+            String startAName = getSimpleName(Variable.StartHA, period);
+            IloIntVar startA = (IloIntVar) getVariable(startAName);
+            String startBName = getSimpleName(Variable.StartHB, period);
+            IloIntVar startB = (IloIntVar) getVariable(startBName);
+            String pumpingName = getSimpleName(Variable.Pumping, period);
+            IloNumVar pumping = getVariable(pumpingName);
 
             //Respect range
             IloLinearNumExpr reservoirMinLevel = cplex.linearNumExpr();
@@ -67,23 +82,22 @@ public class Exercise12_16 extends Exercise12_15
             startingB.addTerm(1, startB);
             startingB.addTerm(-1, hydroB);
 
+            int previousPeriod = period - 1;
+
             if (period == 1)
             {
-                cplex.addEq(startingA, previousDayHydro[0]);
-                cplex.addEq(startingB, previousDayHydro[1]);
+                previousPeriod = 5;
                 cplex.addEq(reservoirOrigin, 16);
             }
             else
             {
-                startingA.addTerm(1, getVariable(getSimpleName(Variable.RunHA, period - 1)));
-                startingB.addTerm(1, getVariable(getSimpleName(Variable.RunHB, period - 1)));
-                cplex.addGe(startingA, 0);
-                cplex.addGe(startingB, 0);
-
                 reservoirOrigin.addTerm(-1, getVariable(getSimpleName(Variable.Reservoir, period - 1)));
                 cplex.addEq(reservoirOrigin, 0);
             }
-
+            startingA.addTerm(1, getVariable(getSimpleName(Variable.RunHA, previousPeriod)));
+            startingB.addTerm(1, getVariable(getSimpleName(Variable.RunHB, previousPeriod)));
+            cplex.addGe(startingA, 0);
+            cplex.addGe(startingB, 0);
         }
         super.setUpModel(cplex);
     }

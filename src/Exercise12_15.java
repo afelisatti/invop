@@ -30,14 +30,26 @@ public class Exercise12_15 extends Exercise
         int[] minimumProduction = new int[]{850, 1250, 1500};
         int[] maximumProduction = new int[]{2000, 1750, 4000};
         int[] availableUnits = new int[]{12, 10, 5};
-        //Assumed running units on previous day based on results using 0 units
-        int[] previousDay = new int[]{0, 0, 0};
         int[] minimumCost = new int[]{1000, 2600, 3000};
         int[] startingCost = new int[]{2000, 1000, 500};
         Double[] price = new Double[]{2.0, 1.3, 3.0};
 
         //objective
         IloLinearNumExpr objective = cplex.linearNumExpr();
+
+        //Set up variables
+        for(int period = 1; period <= 5; period++)
+        {
+            for (int type = 1; type <= 3; type++)
+            {
+                String amountName = getVariableName(Variable.Amount, period, type);
+                setVariable(amountName, cplex.intVar(0, Integer.MAX_VALUE, amountName));
+                String startedName = getVariableName(Variable.Started, period, type);
+                setVariable(startedName, cplex.intVar(0, Integer.MAX_VALUE, startedName));
+                String wattsName = getVariableName(Variable.Watts, period, type);
+                setVariable(wattsName, cplex.numVar(0.0, Double.MAX_VALUE, wattsName));
+            }
+        }
 
         for(int period = 1; period <= 5; period++)
         {
@@ -48,27 +60,26 @@ public class Exercise12_15 extends Exercise
 
             for (int type = 1; type <= 3; type++)
             {
-                //Set up variables
+                //Get variables
                 String amountName = getVariableName(Variable.Amount, period, type);
-                IloIntVar amount = (IloIntVar) setVariable(amountName, cplex.intVar(0, Integer.MAX_VALUE, amountName));
+                IloIntVar amount = (IloIntVar) getVariable(amountName);
                 String startedName = getVariableName(Variable.Started, period, type);
-                IloIntVar start = (IloIntVar) setVariable(startedName, cplex.intVar(0, Integer.MAX_VALUE, startedName));
+                IloIntVar start = (IloIntVar) getVariable(startedName);
                 String wattsName = getVariableName(Variable.Watts, period, type);
-                IloNumVar watts = setVariable(wattsName, cplex.numVar(0.0, Double.MAX_VALUE, wattsName));
+                IloNumVar watts = getVariable(wattsName);
 
                 //Started units logic
                 IloLinearNumExpr startedUnits = cplex.linearNumExpr();
                 startedUnits.addTerm(1, start);
                 startedUnits.addTerm(-1.0, amount);
+                int previousPeriod = period - 1;
                 if (period == 1)
                 {
-                    cplex.addEq(startedUnits, previousDay[type-1]);
+                    previousPeriod = 5;
                 }
-                else
-                {
-                    startedUnits.addTerm(1, getVariable(getVariableName(Variable.Amount, period-1, type)));
-                    cplex.addGe(startedUnits, 0);
-                }
+                startedUnits.addTerm(1, getVariable(getVariableName(Variable.Amount, previousPeriod, type)));
+                cplex.addGe(startedUnits, 0);
+
 
                 //Respect available units
                 IloLinearNumExpr respectUnits = cplex.linearNumExpr();
