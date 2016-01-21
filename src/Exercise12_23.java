@@ -11,7 +11,6 @@ import ilog.concert.IloException;
 
 public class Exercise12_23 extends Exercise
 {
-    Double[][] distances = new Double[21][21];
     int[] demand = new int[]{0, 5, 4, 3, 6, 7, 3, 4, 6, 5, 4, 7, 3, 4, 5, 6, 8, 5, 7, 6, 6};
     Point[] farmLocations = new Point[]{
             new Point(0,0),
@@ -39,7 +38,6 @@ public class Exercise12_23 extends Exercise
     @Override
     public void setUpModel(IloCplex cplex) throws IloException
     {
-        resolveDistances();
         //add variables, constraints and objective
         IloLinearNumExpr objective = cplex.linearNumExpr();
 
@@ -131,20 +129,9 @@ public class Exercise12_23 extends Exercise
 
     private Double getDistance(int i, int j)
     {
-        return distances[i-1][j-1];
+        return calculateSquareDistanceBetween(farmLocations[i-1],farmLocations[j-1]);
     }
 
-    private void resolveDistances()
-    {
-        for(int i = 0; i<21; i++){
-            for (int j = 0; j<i ; j++){
-                double distance = calculateSquareDistanceBetween(farmLocations[i],farmLocations[j]);
-                distances[i][j] = distance;
-                distances[j][i] = distance;
-            }
-            distances[i][i]= 0.0;
-        }
-    }
     private double calculateSquareDistanceBetween(Point point1, Point point2){
         return Math.pow((double)(point1.xAxis() - point2.xAxis()),2.0) + Math.pow((double)point1.yAxis() - point2.yAxis(),2.0);
     }
