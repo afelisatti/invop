@@ -23,6 +23,7 @@ public abstract class Exercise
                 System.out.println(String.format("%s = %s", variable, cplex.getValue(getVariable(variable))));
             }
             showDuals(cplex);
+            getPostExecutionData(cplex);
         }
     }
 

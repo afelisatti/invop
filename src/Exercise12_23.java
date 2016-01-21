@@ -47,52 +47,35 @@ public class Exercise12_23 extends Exercise
         {
             IloLinearNumExpr dailyDemand = cplex.linearNumExpr();
 
-            for (int farmFrom = 1; farmFrom <= 21; farmFrom++)
+            for (int farm = 1; farm <= 21; farm++)
             {
-                String visitName = getVisit(farmFrom, day);
+                String visitName = getVisit(farm, day);
                 IloIntVar visit = (IloIntVar) setVariable(visitName, cplex.boolVar(visitName));
 
-                dailyDemand.addTerm(demand[farmFrom -1], visit);
+                dailyDemand.addTerm(demand[farm -1], visit);
 
-                IloLinearNumExpr farmFollows = cplex.linearNumExpr();
+                IloLinearNumExpr farmReachedToAndFrom = cplex.linearNumExpr();
 
-                for (int farmTo = 1; farmTo <= 21; farmTo++)
+                for (int otherPreviousFarm = farm - 1; otherPreviousFarm >=1; otherPreviousFarm--)
                 {
-                    if (farmFrom != farmTo)
-                    {
-                        String tourName = getTour(day, farmFrom, farmTo);
-                        IloIntVar tour = (IloIntVar) setVariable(tourName, cplex.boolVar(tourName));
+                    String tourName = getTour(day, otherPreviousFarm, farm);
+                    IloIntVar tour = (IloIntVar) getVariable(tourName);
 
-                        farmFollows.addTerm(1, tour);
-
-                        objective.addTerm(getDistance(farmFrom, farmTo), tour);
-                    }
-
+                    farmReachedToAndFrom.addTerm(1, tour);
                 }
 
-                farmFollows.addTerm(-1, visit);
-                cplex.addEq(farmFollows, 0);
-            }
-
-            for (int farmTo = 1; farmTo <= 21; farmTo++)
-            {
-                IloLinearNumExpr farmPrecedes = cplex.linearNumExpr();
-
-                for (int farmFrom = 1; farmFrom <= 21; farmFrom++)
+                for (int otherFollowingFarm = farm + 1; otherFollowingFarm <= 21; otherFollowingFarm++)
                 {
-                    if (farmFrom != farmTo)
-                    {
-                        //IloLinearNumExpr cantGoThereAndBackDay = cplex.linearNumExpr();
-                        //cantGoThereAndBackDay.addTerm(1,getVariable(getTour(day,farmTo,farmFrom)));
-                        //cantGoThereAndBackDay.addTerm(1,getVariable(getTour(day,farmFrom,farmTo)));
-                        //cplex.addLe(1,cantGoThereAndBackDay);
+                    String tourName = getTour(day, farm, otherFollowingFarm);
+                    IloIntVar tour = (IloIntVar) setVariable(tourName, cplex.boolVar(tourName));
 
-                        farmPrecedes.addTerm(1, getVariable(getTour(day, farmFrom, farmTo)));
-                    }
+                    farmReachedToAndFrom.addTerm(1, tour);
+
+                    objective.addTerm(getDistance(farm, otherFollowingFarm), tour);
                 }
 
-                farmPrecedes.addTerm(-1, getVariable(getVisit(farmTo, day)));
-                cplex.addEq(farmPrecedes, 0);
+                farmReachedToAndFrom.addTerm(-2, visit);
+                cplex.addEq(farmReachedToAndFrom, 0);
             }
 
             cplex.addLe(dailyDemand, 80);
@@ -117,6 +100,22 @@ public class Exercise12_23 extends Exercise
             }
         }
 
+        //Adding extra constraints
+        //for (int day = 1; day <=2; day++)
+        //{
+        //    IloLinearNumExpr two518Cycle = cplex.linearNumExpr();
+        //    two518Cycle.addTerm(1, getVariable(getTour(day, 2, 5)));
+        //    two518Cycle.addTerm(1, getVariable(getTour(day, 2, 18)));
+        //    two518Cycle.addTerm(1, getVariable(getTour(day, 5, 18)));
+        //    cplex.addLe(two518Cycle, 2);
+        //
+        //    IloLinearNumExpr six720Cycle = cplex.linearNumExpr();
+        //    six720Cycle.addTerm(1, getVariable(getTour(day, 6, 7)));
+        //    six720Cycle.addTerm(1, getVariable(getTour(day, 6, 20)));
+        //    six720Cycle.addTerm(1, getVariable(getTour(day, 7, 20)));
+        //    cplex.addLe(six720Cycle, 2);
+        //}
+
         cplex.addObjective(IloObjectiveSense.Minimize, objective);
     }
 
@@ -132,8 +131,6 @@ public class Exercise12_23 extends Exercise
 
     private Double getDistance(int i, int j)
     {
-        //return 1.0;
-        //because its Zero-based
         return distances[i-1][j-1];
     }
 
@@ -167,18 +164,27 @@ public class Exercise12_23 extends Exercise
         }
     }
     @Override
-    public void getPostExecutionData(IloCplex cplex) throws IloException{//ilog.cplex.IloCplex.UnknownObjectException{
-        for(int day = 1; day <=2; day++){
+    public void getPostExecutionData(IloCplex cplex) throws IloException{
+        for(int day = 1; day <=2; day++)
+        {
             System.out.println("Path day "+String.valueOf(day)+":");
-            for (int farmTo = 1; farmTo<=21;farmTo++){
-                for(int farmFrom = 1; farmFrom<=21;farmFrom++){
-                    if(farmTo != farmFrom){
-                        String tour = getTour(1,farmFrom,farmTo);
-                        IloNumVar cplexVar = getVariable(tour);
-                        double visited = cplex.getValue(cplexVar);
-                        if (visited > 0)
-                            System.out.println(tour);
+            for (int farm = 1; farm <= 21; farm++)
+            {
+                String visitName = getVisit(farm, day);
+                IloIntVar visit = (IloIntVar) getVariable(visitName);
+
+                if (cplex.getValue(visit) > 0)
+                {
+                    for (int otherFarm = farm + 1; otherFarm <=21; otherFarm++)
+                    {
+                        String tourName = getTour(day, farm, otherFarm);
+                        IloIntVar tour = (IloIntVar) getVariable(tourName);
+
+                        if (cplex.getValue(tour) > 0)
+                        {
+                            System.out.println(tourName);
                         }
+                    }
                 }
             }
         }
