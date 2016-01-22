@@ -51,7 +51,14 @@ public class Exercise12_23 extends Exercise
                 String visitName = getVisit(farm, day);
                 IloIntVar visit = (IloIntVar) setVariable(visitName, cplex.boolVar(visitName));
 
-                dailyDemand.addTerm(demand[farm -1], visit);
+                if (day == 1 && farm == 11)
+                {
+                    IloLinearNumExpr firstDayElevel = cplex.linearNumExpr();
+                    firstDayElevel.addTerm(1, visit);
+                    cplex.addEq(firstDayElevel, 1);
+                }
+
+                dailyDemand.addTerm(demand[farm - 1], visit);
 
                 IloLinearNumExpr farmReachedToAndFrom = cplex.linearNumExpr();
 
@@ -100,20 +107,26 @@ public class Exercise12_23 extends Exercise
         }
 
         //Adding extra constraints
-        //for (int day = 1; day <=2; day++)
-        //{
-        //    IloLinearNumExpr two518Cycle = cplex.linearNumExpr();
-        //    two518Cycle.addTerm(1, getVariable(getTour(day, 2, 5)));
-        //    two518Cycle.addTerm(1, getVariable(getTour(day, 2, 18)));
-        //    two518Cycle.addTerm(1, getVariable(getTour(day, 5, 18)));
-        //    cplex.addLe(two518Cycle, 2);
-        //
-        //    IloLinearNumExpr six720Cycle = cplex.linearNumExpr();
-        //    six720Cycle.addTerm(1, getVariable(getTour(day, 6, 7)));
-        //    six720Cycle.addTerm(1, getVariable(getTour(day, 6, 20)));
-        //    six720Cycle.addTerm(1, getVariable(getTour(day, 7, 20)));
-        //    cplex.addLe(six720Cycle, 2);
-        //}
+        for (int day = 1; day <=2; day++)
+        {
+            IloLinearNumExpr two518Cycle = cplex.linearNumExpr();
+            two518Cycle.addTerm(1, getVariable(getTour(day, 2, 5)));
+            two518Cycle.addTerm(1, getVariable(getTour(day, 2, 18)));
+            two518Cycle.addTerm(1, getVariable(getTour(day, 5, 18)));
+            cplex.addLe(two518Cycle, 2);
+
+            IloLinearNumExpr six720Cycle = cplex.linearNumExpr();
+            six720Cycle.addTerm(1, getVariable(getTour(day, 6, 7)));
+            six720Cycle.addTerm(1, getVariable(getTour(day, 6, 20)));
+            six720Cycle.addTerm(1, getVariable(getTour(day, 7, 20)));
+            cplex.addLe(six720Cycle, 2);
+
+            IloLinearNumExpr eight921Cycle = cplex.linearNumExpr();
+            eight921Cycle.addTerm(1, getVariable(getTour(day, 8, 9)));
+            eight921Cycle.addTerm(1, getVariable(getTour(day, 8, 21)));
+            eight921Cycle.addTerm(1, getVariable(getTour(day, 9, 21)));
+            cplex.addLe(eight921Cycle, 2);
+        }
 
         cplex.addObjective(IloObjectiveSense.Minimize, objective);
     }
