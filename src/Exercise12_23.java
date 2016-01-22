@@ -35,6 +35,7 @@ public class Exercise12_23 extends Exercise
             new Point(-6,-5),
             new Point(5,-4)
     };
+
     @Override
     public void setUpModel(IloCplex cplex) throws IloException
     {
@@ -129,27 +130,13 @@ public class Exercise12_23 extends Exercise
 
     private Double getDistance(int i, int j)
     {
-        return calculateSquareDistanceBetween(farmLocations[i-1],farmLocations[j-1]);
+        return calculateDistanceBetween(farmLocations[i - 1], farmLocations[j - 1]);
     }
 
-    private double calculateSquareDistanceBetween(Point point1, Point point2){
-        return Math.pow((double)(point1.xAxis() - point2.xAxis()),2.0) + Math.pow((double)point1.yAxis() - point2.yAxis(),2.0);
+    private double calculateDistanceBetween(Point point1, Point point2){
+        return Math.hypot((double)point1.xAxis() - point2.xAxis(),(double)point1.yAxis() - point2.yAxis());
     }
-    private class Point {
-        protected int x;
-        protected int y;
 
-        Point(int xComponent, int yComponent){
-            x = xComponent;
-            y = yComponent;
-        }
-        public int xAxis(){
-            return x;
-        }
-        public int yAxis(){
-            return y;
-        }
-    }
     @Override
     public void getPostExecutionData(IloCplex cplex) throws IloException{
         for(int day = 1; day <=2; day++)
@@ -174,6 +161,27 @@ public class Exercise12_23 extends Exercise
                     }
                 }
             }
+        }
+    }
+
+    private class Point
+    {
+        protected int x;
+        protected int y;
+
+        Point(int xComponent, int yComponent)
+        {
+            x = xComponent;
+            y = yComponent;
+        }
+
+        public int xAxis()
+        {
+            return x;
+        }
+        public int yAxis()
+        {
+            return y;
         }
     }
 }
