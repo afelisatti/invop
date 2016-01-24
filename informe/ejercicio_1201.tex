@@ -1,2 +1,132 @@
 \section{Ejercicio 12.1}
 \subsection{Modelo}
+\subsubsection{Variables}
+Para cada tipo de aceite (VEG1, VEG2, OIL1, OIL2, OIL3) y cada mes (de enero a junio) dintinguimos 3 variables que denotan la cantidad comprada (Bought), refinada (Refined) y guardada (Saved). Por ejemplo, tenemos las variables $3\_VEG2\_Bought, 3\_VEG2\_Refined y 3\_VEG2\_Saved$ para el mes de marzo y el aceite VEG2.
+
+En t'erminos generales, tenemos variables M\_A\_T donde M denota el mes (de 1 a 6), A donota el tipo de aceite y T el tipo de uso. 
+\subsubsection{Restricciones}
+Considerando las limitaciones de refinaci'on para aceites vegetales y no vegetales, para cada mes M tenemos:
+\begin{itemize}
+\item$M\_VEG1\_Refined + M\_VEG2\_Refined \leq 200$
+\item$M\_OIL1\_Refined + M\_OIL2\_Refined + M\_OIL3\_Refined \leq 250$
+\end{itemize}
+Luego, por las limitaciones de espacio para guardarlos tenemos para cada mes M y cada tipo de aceite A:
+\begin{itemize}
+\item$M\_A\_Saved \leq 1000$
+\end{itemize}
+En t'erminos de dureza, tenemos para cada mes M, con $D_A$ el valor de la dureza del aceite A:
+\begin{itemize}
+\item$3 M\_Total\_Refined \leq  \sum_{A}^{} D_{A} M\_A\_Refined \leq 6 M\_Total\_Refined$
+\end{itemize}
+Pero considerando que el producto final ser'a la mezcla de las partes refinadas de cada aceite (es decir la misma sumatoria), separando las desigualdades nos queda:
+\begin{itemize}
+\item$0 \leq  \sum_{A}^{} (D_{A} - 3) M\_A\_Refined$
+\item$\sum_{A}^{} (D_{A} - 6) M\_A\_Refined \leq 0$
+\end{itemize}
+Finalmente debemos relacionar los tres tipos de acciones posibles, esto es: la cantidad guardada el mes anterior y la comprada en el mes actual deben ser igual a lo refinado y guardado en el mes actual. Es decir, para cada mes M y cada tipo de aceite A:
+\begin{itemize}
+\item$M\_A\_Bought + (M-1)\_A\_Saved = M\_A\_Refined + M\_A\_Saved$
+\end{itemize}
+Considerando que las cantidades iniciales son 500 toneladas de cada aceite y que al finalizar tambi'en deben quedar 500 toneladas debemos agregar:
+\begin{itemize}
+\item$0\_A\_Saved = 500$
+\item$6\_A\_Saved = 500$
+\end{itemize}
+\subsubsection{Objetivo}
+Nuestro objetivo es maximizar la ganancia total, que es la sumatoria de cada ganancia mensual, donde tenemos que cada tonelada de producto final (la mezcla de los aceites refinados) es 150 libras, el costo de almacenamiento es 5 libras (para las toneladas guardadas) y que cada tipo de aceite tiene un cierto valor en el mercado seg'un el mes (para las toneladas compradas). Entonces, con $P_{A\_M}$ el precio del aceite A en el mes M tenemos que maximizar:
+$$\sum_{M=1}^{6} \sum_{A}^{} 150 M\_A\_Refined - 5 M\_A\_Saved - P_{A\_M} M\_A\_Bought$$
+\subsection{Soluci'on}
+Obtuvimos la siguiente soluci'on:\\
+Status = Optimal, Objective = 107842.59259259258\\
+Con la siguiente asignaci'on de variables (por simplicidad no listamos aquellas cuyo resultado fue 0).\\
+Variables:\\
+$%1\_Oil1\_Bought = 0.0\\
+%1\_Oil1\_Refined = 0.0\\
+1\_Oil1\_Saved = 500.0\\
+%1\_Oil2\_Bought = 0.0\\
+1\_Oil2\_Refined = 250.0\\
+1\_Oil2\_Saved = 250.0\\
+%1\_Oil3\_Bought = 0.0\\
+%1\_Oil3\_Refined = 0.0\\
+1\_Oil3\_Saved = 500.0\\
+%1\_Veg1\_Bought = 0.0\\
+1\_Veg1\_Refined = 22.22222222222217\\
+1\_Veg1\_Saved = 477.7777777777778\\
+%1\_Veg2\_Bought = 0.0\\
+1\_Veg2\_Refined = 177.77777777777783\\
+1\_Veg2\_Saved = 322.2222222222222\\
+%2\_Oil1\_Bought = 0.0\\
+%2\_Oil1\_Refined = 0.0\\
+2\_Oil1\_Saved = 500.0\\
+2\_Oil2\_Bought = 750.0\\
+2\_Oil2\_Refined = 250.0\\
+2\_Oil2\_Saved = 750.0\\
+%2\_Oil3\_Bought = 0.0\\
+%2\_Oil3\_Refined = 0.0\\
+2\_Oil3\_Saved = 500.0\\
+%2\_Veg1\_Bought = 0.0\\
+%2\_Veg1\_Refined = 0.0\\
+2\_Veg1\_Saved = 477.7777777777778\\
+%2\_Veg2\_Bought = 0.0\\
+2\_Veg2\_Refined = 200.0\\
+2\_Veg2\_Saved = 122.22222222222217\\
+%3\_Oil1\_Bought = 0.0\\
+%3\_Oil1\_Refined = 0.0\\
+3\_Oil1\_Saved = 500.0\\
+%3\_Oil2\_Bought = 0.0\\
+3\_Oil2\_Refined = 250.0\\
+3\_Oil2\_Saved = 500.0\\
+%3\_Oil3\_Bought = 0.0\\
+%3\_Oil3\_Refined = 0.0\\
+3\_Oil3\_Saved = 500.0\\
+%3\_Veg1\_Bought = 0.0\\
+3\_Veg1\_Refined = 159.25925925925927\\
+3\_Veg1\_Saved = 318.51851851851853\\
+%3\_Veg2\_Bought = 0.0\\
+3\_Veg2\_Refined = 40.74074074074073\\
+3\_Veg2\_Saved = 81.48148148148144\\
+%4\_Oil1\_Bought = 0.0\\
+%4\_Oil1\_Refined = 0.0\\
+4\_Oil1\_Saved = 500.0\\
+%4\_Oil2\_Bought = 0.0\\
+4\_Oil2\_Refined = 250.0\\
+4\_Oil2\_Saved = 250.0\\
+%4\_Oil3\_Bought = 0.0\\
+%4\_Oil3\_Refined = 0.0\\
+4\_Oil3\_Saved = 500.0\\
+%4\_Veg1\_Bought = 0.0\\
+4\_Veg1\_Refined = 159.25925925925927\\
+4\_Veg1\_Saved = 159.25925925925927\\
+%4\_Veg2\_Bought = 0.0\\
+4\_Veg2\_Refined = 40.74074074074073\\
+4\_Veg2\_Saved = 40.740740740740705\\
+%5\_Oil1\_Bought = 0.0\\
+%5\_Oil1\_Refined = 0.0\\
+5\_Oil1\_Saved = 500.0\\
+%5\_Oil2\_Bought = 0.0\\
+5\_Oil2\_Refined = 250.0\\
+%5\_Oil2\_Saved = 0.0\\
+%5\_Oil3\_Bought = 0.0\\
+%5\_Oil3\_Refined = 0.0\\
+5\_Oil3\_Saved = 500.0\\
+%5\_Veg1\_Bought = 0.0\\
+5\_Veg1\_Refined = 159.25925925925927\\
+%5\_Veg1\_Saved = 0.0\\
+%5\_Veg2\_Bought = 0.0\\
+5\_Veg2\_Refined = 40.74074074074073\\
+%5\_Veg2\_Saved = 0.0\\
+%6\_Oil1\_Bought = 0.0\\
+%6\_Oil1\_Refined = 0.0\\
+6\_Oil1\_Saved = 500.0\\
+6\_Oil2\_Bought = 750.0\\
+6\_Oil2\_Refined = 250.0\\
+6\_Oil2\_Saved = 500.0\\
+%6\_Oil3\_Bought = 0.0\\
+%6\_Oil3\_Refined = 0.0\\
+6\_Oil3\_Saved = 500.0\\
+6\_Veg1\_Bought = 659.2592592592592\\
+6\_Veg1\_Refined = 159.25925925925927\\
+6\_Veg1\_Saved = 500.0\\
+6\_Veg2\_Bought = 540.7407407407408\\
+6\_Veg2\_Refined = 40.74074074074073\\
+6\_Veg2\_Saved = 500.0$\\

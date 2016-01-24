@@ -70,10 +70,11 @@ public class Exercise12_01 extends Exercise
             {
                 IloLinearNumExpr maxStorageExp = cplex.linearNumExpr();
                 maxStorageExp.addTerm(1, getVariable(getVariableName(oil, Kind.Saved, month)));
+                cplex.addLe(maxStorageExp, 1000);
             }
             //Hardness
             IloLinearNumExpr overExp = cplex.linearNumExpr();
-            overExp.addTerm(5.3, getVariable(getVariableName(oils[0], Kind.Refined, month)));
+            overExp.addTerm(5.8, getVariable(getVariableName(oils[0], Kind.Refined, month)));
             overExp.addTerm(3.1, getVariable(getVariableName(oils[1], Kind.Refined, month)));
             overExp.addTerm(-1, getVariable(getVariableName(oils[2], Kind.Refined, month)));
             overExp.addTerm(1.2, getVariable(getVariableName(oils[3], Kind.Refined, month)));
