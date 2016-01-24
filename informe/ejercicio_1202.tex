@@ -1,1 +1,147 @@
 \section{Ejercicio 12.2}
+\subsection{Modelo}
+Para esta extension del ejercicio 12.1 mantenemos todo lo mismo, agregando algunas variables y restricciones extra.
+\subsubsection{Variables}
+Incluimos ahora para cada mes M y cada tipo de aceite A una variable booleana $M\_A$ que resprenta el uso de A en el mes M.
+\subsubsection{Restricciones}
+Sabemos que de usarse un aceite se debe usar mas de 20 toneladas y por el ejercicio anterior tenemos un limite superior para los aceites vegetales y no vegetales (200 y 250 respectivamente). Entonces para cada mes M y cada tipo de aceite A, con $S_{A}$ el l'imite superior de A seg'un vegetal o no vegetal, tenemos:
+\begin{itemize}
+\item$20 M\_A \leq M\_A\_Refined$
+\item$M\_A\_Refined \leq S_{A} M\_A$
+\end{itemize}
+Por otro lado, para garantizar que solo se mezclen 3 tipos de aceites, para cada mes M y tipo de aceite A tenemos:
+\begin{itemize}
+\item$\sum_{A} M\_A \leq 3$
+\end{itemize}
+Finalmente, para garantizar que si se usa VEG1 o VEG2 tambien se use OIL3, para cada mes M tenemos:
+\begin{itemize}
+\item$M\_VEG1 \leq M\_OIL3$
+\item$M\_VEG2 \leq M\_OIL3$
+\end{itemize}
+\subsubsection{Objetivo}
+El objetivo sigue siendo el mismo que en el ejercicio anterior: maximizar la ganancia total.
+\subsection{Soluci'on}
+Obtuvimos la siguiente soluci'on:\\
+Status = Optimal, Objective = 100278.70370370371\\
+Con la siguiente asignaci'on de variables (por simplicidad no listamos aquellas cuyo resultado fue 0).\\
+Variables: \\
+%1\_Oil1 = -0.0\\
+%1\_Oil1\_Bought = 0.0\\
+%1\_Oil1\_Refined = 0.0\\
+1\_Oil1\_Saved = 500.0\\
+%1\_Oil2 = -0.0\\
+%1\_Oil2\_Bought = 0.0\\
+%1\_Oil2\_Refined = 0.0\\
+1\_Oil2\_Saved = 500.0\\
+1\_Oil3 = 1.0\\
+%1\_Oil3\_Bought = 0.0\\
+1\_Oil3\_Refined = 250.0\\
+1\_Oil3\_Saved = 250.0\\
+1\_Veg1 = 1.0\\
+%1\_Veg1\_Bought = 0.0\\
+1\_Veg1\_Refined = 85.18518518518528\\
+1\_Veg1\_Saved = 414.8148148148147\\
+1\_Veg2 = 1.0\\
+%1\_Veg2\_Bought = 0.0\\
+1\_Veg2\_Refined = 114.81481481481472\\
+1\_Veg2\_Saved = 385.1851851851853\\
+%2\_Oil1 = -0.0\\
+%2\_Oil1\_Bought = 0.0\\
+%2\_Oil1\_Refined = 0.0\\
+2\_Oil1\_Saved = 500.0\\
+%2\_Oil2 = -0.0\\
+2\_Oil2\_Bought = 190.0\\
+%2\_Oil2\_Refined = 0.0\\
+2\_Oil2\_Saved = 690.0\\
+2\_Oil3 = 1.0\\
+%2\_Oil3\_Bought = 0.0\\
+2\_Oil3\_Refined = 250.0\\
+%2\_Oil3\_Saved = 0.0\\
+2\_Veg1 = 1.0\\
+%2\_Veg1\_Bought = 0.0\\
+2\_Veg1\_Refined = 85.1851851851852\\
+2\_Veg1\_Saved = 329.6296296296295\\
+2\_Veg2 = 1.0\\
+%2\_Veg2\_Bought = 0.0\\
+2\_Veg2\_Refined = 114.8148148148148\\
+2\_Veg2\_Saved = 270.3703703703705\\
+%3\_Oil1 = -0.0\\
+%3\_Oil1\_Bought = 0.0\\
+%3\_Oil1\_Refined = 0.0\\
+3\_Oil1\_Saved = 500.0\\
+3\_Oil2 = 1.0\\
+%3\_Oil2\_Bought = 0.0\\
+3\_Oil2\_Refined = 230.0\\
+3\_Oil2\_Saved = 460.0\\
+3\_Oil3 = 1.0\\
+3\_Oil3\_Bought = 40.0\\
+3\_Oil3\_Refined = 20.0\\
+3\_Oil3\_Saved = 20.0\\
+%3\_Veg1 = -0.0\\
+%3\_Veg1\_Bought = 0.0\\
+%3\_Veg1\_Refined = 0.0\\
+3\_Veg1\_Saved = 329.6296296296295\\
+3\_Veg2 = 1.0\\
+%3\_Veg2\_Bought = 0.0\\
+3\_Veg2\_Refined = 200.0\\
+3\_Veg2\_Saved = 70.3703703703705\\
+%4\_Oil1 = -0.0\\
+%4\_Oil1\_Bought = 0.0\\
+%4\_Oil1\_Refined = 0.0\\
+4\_Oil1\_Saved = 500.0\\
+4\_Oil2 = 1.0\\
+%4\_Oil2\_Bought = 0.0\\
+4\_Oil2\_Refined = 230.0\\
+4\_Oil2\_Saved = 230.0\\
+4\_Oil3 = 1.0\\
+%4\_Oil3\_Bought = 0.0\\
+4\_Oil3\_Refined = 20.0\\
+%4\_Oil3\_Saved = 0.0\\
+4\_Veg1 = 1.0\\
+%4\_Veg1\_Bought = 0.0\\
+4\_Veg1\_Refined = 155.0\\
+4\_Veg1\_Saved = 174.6296296296295\\
+%4\_Veg2 = -0.0\\
+%4\_Veg2\_Bought = 0.0\\
+%4\_Veg2\_Refined = 0.0\\
+4\_Veg2\_Saved = 70.3703703703705\\
+%5\_Oil1 = -0.0\\
+%5\_Oil1\_Bought = 0.0\\
+%5\_Oil1\_Refined = 0.0\\
+5\_Oil1\_Saved = 500.0\\
+5\_Oil2 = 1.0\\
+%5\_Oil2\_Bought = 0.0\\
+5\_Oil2\_Refined = 230.0\\
+%5\_Oil2\_Saved = 0.0\\
+5\_Oil3 = 1.0\\
+5\_Oil3\_Bought = 540.0\\
+5\_Oil3\_Refined = 20.0\\
+5\_Oil3\_Saved = 520.0\\
+5\_Veg1 = 1.0\\
+%5\_Veg1\_Bought = 0.0\\
+5\_Veg1\_Refined = 155.0\\
+5\_Veg1\_Saved = 19.629629629629505\\
+%5\_Veg2 = -0.0\\
+%5\_Veg2\_Bought = 0.0\\
+%5\_Veg2\_Refined = 0.0\\
+5\_Veg2\_Saved = 70.3703703703705\\
+%6\_Oil1 = -0.0\\
+%6\_Oil1\_Bought = 0.0\\
+%6\_Oil1\_Refined = 0.0\\
+6\_Oil1\_Saved = 500.0\\
+6\_Oil2 = 1.0\\
+6\_Oil2\_Bought = 730.0\\
+6\_Oil2\_Refined = 230.0\\
+6\_Oil2\_Saved = 500.0\\
+6\_Oil3 = 1.0\\
+%6\_Oil3\_Bought = 0.0\\
+6\_Oil3\_Refined = 20.0\\
+6\_Oil3\_Saved = 500.0\\
+%6\_Veg1 = 0.0\\
+6\_Veg1\_Bought = 480.3703703703705\\
+%6\_Veg1\_Refined = 0.0\\
+6\_Veg1\_Saved = 500.0\\
+6\_Veg2 = 1.0\\
+6\_Veg2\_Bought = 629.6296296296296\\
+6\_Veg2\_Refined = 200.0\\
+6\_Veg2\_Saved = 500.0\\

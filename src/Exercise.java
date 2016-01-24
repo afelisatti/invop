@@ -12,15 +12,15 @@ public abstract class Exercise
     public void showResults(IloCplex cplex) throws IloException
     {
         IloCplex.Status status = cplex.getStatus();
-        System.out.println("Status = " + status);
+        System.out.println("Status = " + status + "\\\\");
 
         if(status.equals(IloCplex.Status.Optimal) || status.equals(IloCplex.Status.Feasible))
         {
-            System.out.println("Objective = " + cplex.getObjValue());
-            System.out.println("Variables:");
+            System.out.println("Objective = " + cplex.getObjValue() + "\\\\");
+            System.out.println("Variables: \\\\");
             for (String variable : variables.keySet())
             {
-                System.out.println(String.format("%s = %s", variable, cplex.getValue(getVariable(variable))));
+                System.out.println(String.format("%s = %s\\\\", variable, cplex.getValue(getVariable(variable))));
             }
             showDuals(cplex);
             getPostExecutionData(cplex);
