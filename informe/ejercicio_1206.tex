@@ -1,1 +1,50 @@
 \section{Ejercicio 12.6}
+\subsection{Modelo}
+\subsubsection{Variables}
+Utilizamos una serie de variables para analizar la distribuci'on de barriles de los distintos tipos de productos. Tenemos entonces: 
+\begin{itemize}
+\item C1 y C2, representando al crude 1 y 2 respectivamente
+\item  LN, MN y HN, representando light, medium y heavy naphthas
+\item LNP, MNP y HNP, representando light, medium y heavy naphtas utilizadas para premium petrol
+\item LNRe, MNRe y HNRe,representando light, medium y heavy naphtas utilizadas para regular petrol
+\item LNR, MNR y HNR, representando light, medium y heavy naphthas reformadas
+\item RG, representando a la gasolina reformada
+\item RGP y RGRe, representando a la gasolina reformada utilizada para premium petrol y regular petrol
+\item LiO y HO, representando light y heavy oils
+\item LiOJF y LiOC representando light oil utilizado para jet fuel y para cracked oil
+\item HOJFy HOC representando heavy oil utilizado para jet fuel y para cracked oil
+\item R, representando al residuum
+\item RJF y RLO, representando el residuum utilizado para jet fuel y para lube oil
+\item CF y CO, representando la cracked gasoline y el cracked oil
+\item COJF, representando el cracked oil utilizado para jet fuel
+\item CGP y CGRe, representando la cracked gasoline utilizada para premium y regular petrol
+\item PP, RP, JF, FO y LO representando premium petrol, regular petrol, jet fuel, fuel oil y lube oil
+\end{itemize}
+\subsubsection{Restricciones}
+Para empezar debemos considerar las restricciones del crudo:
+\begin{itemize}
+\item$C1 \leq 20000$
+\item$C2 \leq 30000$
+\item$C1 + C2 \leq 45000$
+\end{itemize}
+Luego la contribuci'on de estos a las naftas y aceites:
+\begin{itemize}
+\item$LN = 0.1C1 + 0.15C2$
+\item$MN = 0.2C1 + 0.25C2$
+\item$HN = 0.2C1 + 0.18C2$
+\item$LiO = 0.12C1 + 0.08C2$
+\item$HO = 0.2C1 + 0.19C2$
+\item$R = 0.13C1 + 0.12C2$
+\end{itemize}
+Seguimos con la distrubuci'on de cada nafta en premium petrol, regular petrol y gasolina reformada, junto con las limitaciones de esta 'ultima y su divisi'on en petrol:
+\begin{itemize}
+\item$LN = LNP + LNRe + LNR$
+\item$MN = MNP + MNRe + MNR$
+\item$HN = HNP + HNRe + HNR$
+\item$LNR + MNR+ HNR \leq 10000$
+\item$RG = 0.6LNR + 0.52MNR+ 0.45HNR$
+\item$RG = RGP + RGRe$
+\end{itemize}
+Ahora lo mismo para los aceites, considerando que para el fuel oil se destina una cantidad constante:
+\subsubsection{Objetivo}
+\subsection{Soluci'on}
