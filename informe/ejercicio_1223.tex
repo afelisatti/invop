@@ -1,1 +1,48 @@
 \section{Ejercicio 12.23}
+\subsection{Modelo}
+\subsubsection{Variables}
+
+
+Asumimos para este ejercicio que solo hay 2 dias que modelar, y que se repetiran en el tiempo. \\
+Decidimos utilizar variables booleanas para representar si una granda fue visitada en un dia dado. \\ 
+
+\begin{itemize}
+\item $Visit\_i\_Day\_x,  i = 1, .. ,21, x = 1,2$ \\
+\end{itemize}
+
+Tambien utilizamos variables booleanas para representar si el camion recorrio, sin importar en que sentido, el camino entre dos de las granjas. \\
+
+\begin{itemize}
+\item $Tour\_i\_j\_Day\_x,  i,j = 1, .. ,21, x = 1,2$ \\
+\end{itemize}
+
+\subsubsection{Restricciones}
+
+Las restricciones planteadas son las siguientes: \\
+
+La demanda diaria entre las granjas que se visitan todos los dias, y las granjas que se visitan cada dos dias no superan los 80 galones cada dia.
+FALTAN LOS COEFSSSSSS!!!!!!!!!!!!!!!!!!!!!!! \\
+\begin{itemize}
+\item $Visit\_1\_Day\_1 + Visit\_2\_Day\_1 + Visit\_3\_Day\_1 + Visit\_4\_Day\_1 + Visit\_5\_Day\_1 + Visit\_6\_Day\_1 + Visit\_7\_Day\_1 + Visit\_8\_Day\_1 + Visit\_9\_Day\_1 + Visit\_10\_Day\_1 + Visit\_11\_Day\_1 + Visit\_12\_Day\_1 + Visit\_13\_Day\_1 + Visit\_14\_Day\_1 + Visit\_15\_Day\_1 + Visit\_16\_Day\_1 + Visit\_17\_Day\_1 + Visit\_18\_Day\_1 + Visit\_19\_Day\_1 + Visit\_20\_Day\_1 + Visit\_21\_Day\_1 \leq 80$ \\
+\item $Visit\_1\_Day\_2 + Visit\_2\_Day\_2 + Visit\_3\_Day\_2 + Visit\_4\_Day\_2 + Visit\_5\_Day\_2 + Visit\_6\_Day\_2 + Visit\_7\_Day\_2 + Visit\_8\_Day\_2 + Visit\_9\_Day\_2 + Visit\_10\_Day\_2 + Visit\_11\_Day\_2 + Visit\_12\_Day\_2 + Visit\_13\_Day\_2 + Visit\_14\_Day\_2 + Visit\_15\_Day\_2 + Visit\_16\_Day\_2 + Visit\_17\_Day\_2 + Visit\_18\_Day\_2 + Visit\_19\_Day\_2 + Visit\_20\_Day\_2 + Visit\_21\_Day\_2 \leq 80$ \\ 
+\end{itemize}
+
+
+La granga 11 debe estar en el primer dia ??????????????????? \\
+\begin{itemize}
+\item $ Visit\_11\_Day\_1 = 1$ \\
+\end{itemize}
+
+La suma de todos los Tours que llegan a una granja en un dia sumado a la cantidad de tours que salen de esa granja ese dia suman 2 * (1 si fue visitada, 0 sino).
+
+\begin{itemize}
+\item $ \sum_{j = 1}^{i-1} Tour\_j\_i\_Day\_x + \sum_{j=i+1}^{21} Tour\_i\_j\_Day\_x = 2 * Visit\_i\_Day\_x            , donde	x = 1,2 $\\
+\end{itemize}
+
+
+
+
+\subsection{Resultados}
+
+A continuacion el resultado devuelto por nuestra implementacion del modelo en cplex para el modelo junto con el primer objetivo.\\
+
