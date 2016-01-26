@@ -1,1 +1,96 @@
 \section{Ejercicio 12.15}
+\subsection{Modelo}
+\subsubsection{Variables}
+En este ejercicio tendremos 3 variables para cada periodo P y cada tipo de generador T:
+\begin{itemize}
+\item $Amount\_TypeT\_PeriodP$, representando la cantidad de generadores de tipo T operando en el periodo P (variables enteras)
+\item $Started\_TypeT\_PeriodP$, representando la cantidad de generadores de tipo T encendidos en el periodo P (variables enteras)
+\item $Watts\_TypeT\_PeriodP$, representando la cantidad de MW producidos por los generadores de tipo T en el periodo P
+\end{itemize}
+\subsubsection{Restricciones}
+En principio, debemos garantizar la satisfacci'on de la producci'on por periodo. Entonces, para cada periodo P, con T el tipo de generador y $D_{P}$ la demanda del periodo P, tenemos:
+\begin{itemize}
+\item $\sum_{T}Watts\_TypeT\_PeriodP \geq D_{P}$
+\end{itemize}
+Adem'as debemos garantizar que podemos producir un 15\% m'as si operamos a la m'axima potencia. Luego, para cada periodo P, con $M_{T}$ el m'aximo nivel de producci'on del generador de tipo T, tenemos:
+\begin{itemize}
+\item $\sum_{T} M_{T} Amount\_TypeT\_PeriodP \geq D_{P} \times 1.15$
+\end{itemize}
+Cada tipo de generador tiene una cantidad de unidades m'axima, con lo cual tenemos para cada periodo P, tipo de generador T, con $U_{T}$ la cantidad de unidades disponibles de T:
+\begin{itemize}
+\item $Amount\_TypeT\_PeriodP \leq U_{T}$
+\end{itemize}
+Adem'as cada tipo debe respetar sus niveles de producci'on m'inimos y m'aximos. Tenemos para cada periodo P y tipo de generador T, con $m_{T}$ y $M_{T}$ el m'inimo y m'aximo nivel de producci'on del tipo T:
+\begin{itemize}
+\item $m_{T} \leq Watts\_TypeT\_PeriodP \leq M_{T}$
+\end{itemize}
+Finalmente debemos establecer la relaci'on entre los generadores operando y los que fueron encendidos. Para cada periodo P y cada tipo de generador T, considerando que el periodo anterior al inicial es el 5 pues el problema es circular, tenemos:
+\begin{itemize}
+\item $Started\_TypeT\_PeriodP \geq Amount\_TypeT\_PeriodP - Amount\_TypeT\_Period(P-1)$
+\end{itemize}
+\subsubsection{Objetivo}
+Nuestro objetivo es minimizar el costo de producci'on, donde debemos considerar las unidades encendidas, las unidades operando con su costo m'inimo y de exceso. Entonces, siendo $S_{T}$ el costo de encender una unidad de tipo T, $Cm_{T}$ el costo de operar al m'inimo, $P_{T}$ el precio de operaci'on por fuera del m'inimo, $m_{T}$ el nivel de producci'on m'inimo y $H_{P}$ la cantidad de horas en el periodo P, tenemos como objetivo minimizar:
+\begin{equation}
+\begin{aligned}
+\sum_{P} \sum_{T} 	& S_{T} Started\_TypeT\_PeriodP \\
+				& + Cm_{T} H_{P} Amount\_TypeT\_PeriodP \\
+ 				& + P_{T} H_{P} (Watts\_TypeT\_PeriodP - m_{T} Amount\_TypeT\_PeriodP)
+\end{aligned}
+\end{equation}
+\subsection{Soluci'on}
+Obtuvimos el siguiente resultado:\\
+Status = Optimal, Objective = 988540.0000000002\\
+Con la siguiente asignaci'on de variables (por simplicidad no listamos aquellas cuyo resultado fue 0):\\
+Variables: \\
+Amount\_Type1\_Period1 = 12.0\\
+Amount\_Type1\_Period2 = 12.0\\
+Amount\_Type1\_Period3 = 12.0\\
+Amount\_Type1\_Period4 = 12.0\\
+Amount\_Type1\_Period5 = 12.0\\
+Amount\_Type2\_Period1 = 3.0000000000000417\\
+Amount\_Type2\_Period2 = 8.000000000000004\\
+Amount\_Type2\_Period3 = 8.000000000000004\\
+Amount\_Type2\_Period4 = 9.000000000000007\\
+Amount\_Type2\_Period5 = 9.000000000000007\\
+%Amount\_Type3\_Period1 = -0.0\\
+%Amount\_Type3\_Period2 = 0.0\\
+%Amount\_Type3\_Period3 = 0.0\\
+Amount\_Type3\_Period4 = 2.0\\
+%Amount\_Type3\_Period5 = 0.0\\
+%Started\_Type1\_Period1 = -0.0\\
+%Started\_Type1\_Period2 = -0.0\\
+%Started\_Type1\_Period3 = -0.0\\
+%Started\_Type1\_Period4 = -0.0\\
+%Started\_Type1\_Period5 = -0.0\\
+%Started\_Type2\_Period1 = -0.0\\
+Started\_Type2\_Period2 = 4.999999999999962\\
+%Started\_Type2\_Period3 = -0.0\\
+Started\_Type2\_Period4 = 1.0000000000000036\\
+%Started\_Type2\_Period5 = -0.0\\
+%Started\_Type3\_Period1 = -0.0\\
+%Started\_Type3\_Period2 = -0.0\\
+%Started\_Type3\_Period3 = -0.0\\
+Started\_Type3\_Period4 = 2.0\\
+%Started\_Type3\_Period5 = -0.0\\
+Watts\_Type1\_Period1 = 10200.0\\
+Watts\_Type1\_Period2 = 15999.999999999995\\
+Watts\_Type1\_Period3 = 11000.0\\
+Watts\_Type1\_Period4 = 21249.999999999985\\
+Watts\_Type1\_Period5 = 11249.999999999993\\
+Watts\_Type2\_Period1 = 4800.0\\
+Watts\_Type2\_Period2 = 14000.000000000005\\
+Watts\_Type2\_Period3 = 14000.000000000005\\
+Watts\_Type2\_Period4 = 15750.000000000013\\
+Watts\_Type2\_Period5 = 15750.000000000007\\
+%Watts\_Type3\_Period1 = 0.0\\
+%Watts\_Type3\_Period2 = 0.0\\
+%Watts\_Type3\_Period3 = -5.529431079676072E-12\\
+Watts\_Type3\_Period4 = 3000.0\\
+%Watts\_Type3\_Period5 = 0.0\\
+Para obtener el costo marginal de producci'on de cada periodo agregamos las restricciones de demanda en cada uno y pedimos su dual. Dado que este es un problema mixto, para obtener los valores duales primero tuvimos que fijar los valores del resultado. Los costos marginales que obtuvimos fueron (en MW, debemos dividir por las horas del periodo para obtener la medida usual de las tarifas, dada en MWh): \\
+Period1 = 7.800000000000001\\
+Period2 = 6.0\\
+Period3 = 12.0\\
+Period4 = 6.0\\
+Period5 = 12.0\\
+Finalmente, eliminando la restricci'on para garantizar el 15% extra, el objetivo nos dio 987790, con lo cual el costo de mantener esa garant'ia es de 750 libras.

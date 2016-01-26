@@ -45,6 +45,84 @@ Seguimos con la distrubuci'on de cada nafta en premium petrol, regular petrol y 
 \item$RG = 0.6LNR + 0.52MNR+ 0.45HNR$
 \item$RG = RGP + RGRe$
 \end{itemize}
-Ahora lo mismo para los aceites, considerando que para el fuel oil se destina una cantidad constante:
+Ahora lo mismo para los aceites, considerando que para el fuel oil se destina una cantidad constante y la limitaci'on de barriles que pueden pasar por el proceso de cracking:
+\begin{itemize}
+\item$LiO = LiOJF + 0.55FO + LiOC$
+\item$HO = HOJF + 0.16FO + HOC$
+\item$LiOC + HOC \leq 8000$
+\end{itemize}
+Sobre el proceso de cracking tambi'en debemos considerar la relaci'on entre los productos:
+\begin{itemize}
+\item$CO = 0.68LiOC + 0.75HOC$
+\item$CO = COJF + 0.22FO$
+\item$CG = 0.28LiOC + 0.2HOC$
+\item$CG = CGP + CGRe$
+\end{itemize}
+Por otro lado, sobre el residuum tenemos:
+\begin{itemize}
+\item$R = RJF + 0.05FO + RLO$
+\end{itemize}
+Ahora podemos dar las restricciones para los productos finales. Para los petrols tenemos su composici'on, las garant'ias sobre su octanaje y sobre la proporci'on entre la producci'on de premium y regular petrol:
+\begin{itemize}
+\item$PP = LNP + MNP + HNP + RGP + CGP$
+\item$RP = LNRe + MNRe + HNRe + RGRe + CGRe$
+\item$94PP \leq 90LNP + 80MNP + 70HNP + 115RGP + 105CGP$
+\item$84RP \leq 90LNRe + 80MNRe + 70HNRe + 115RGRe + 105CGRe$
+\item$PP = 0.4RP$
+\end{itemize}
+Para el jet fuel tenemos su composici'on y la garant'ia sobre el vapour:
+\begin{itemize}
+\item$JF = LiOJF + HOJF + COJF + RJF$
+\item$JF \geq LiOJF + 0.6HOJF + 1.5COJF + 0.05RJF$
+\end{itemize}
+Finalmente, para el lube oil tenemos su composici'on y la limitaci'on de su producci'on:
+\begin{itemize}
+\item$LO = 0.5RLO$
+\item$500 \leq LO \leq 1000$
+\end{itemize}
 \subsubsection{Objetivo}
+Nuestro objetivo es maximizar la ganancia de la venta de los productos finales. Es decir:
+\begin{itemize}
+\item$700PP + 600RP + 400JF + 350FO + 150LO$
+\end{itemize}
 \subsection{Soluci'on}
+Obtuvimos el siguiente resultado: \\
+Status = Optimal, Objective = 2.11365134768933E7\\
+Con la siguiente asignaci'on de variables:\\
+Variables: \\
+C1 = 15000.0\\
+C2 = 30000.0\\
+CG = 1936.0\\
+CGP = 0.0\\
+CGRe = 1936.0\\
+CO = 5706.0\\
+COJF = 5706.0\\
+FO = 0.0\\
+HN = 8400.0\\
+HNP = 0.0\\
+HNR = 5406.861843697072\\
+HNRe = 2993.138156302928\\
+HO = 8700.0\\
+HOC = 3800.0\\
+HOJF = 4900.0\\
+JF = 15156.0\\
+LN = 6000.0\\
+LNP = 5726.934236631985\\
+LNR = 0.0\\
+LNRe = 273.0657633680148\\
+LO = 500.0\\
+LiO = 4200.0\\
+LiOC = 4200.0\\
+LiOJF = 0.0\\
+MN = 10500.0\\
+MNP = 0.0\\
+MNR = 0.0\\
+MNRe = 10500.0\\
+PP = 6817.778853133316\\
+R = 5550.0\\
+RG = 2433.0878296636824\\
+RGP = 1090.8446165013304\\
+RGRe = 1342.243213162352\\
+RJF = 4550.0\\
+RLO = 1000.0\\
+RP = 17044.44713283329\\
