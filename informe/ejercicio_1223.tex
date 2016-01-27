@@ -1,10 +1,13 @@
 \section{Ejercicio 12.23}
+
 \subsection{Modelo}
+
 \subsubsection{Variables}
 
 
 Asumimos para este ejercicio que solo hay 2 dias que modelar, y que se repetiran en el tiempo. \\
-Decidimos utilizar variables booleanas para representar si una granda fue visitada en un dia dado. \\ 
+
+Decidimos utilizar variables booleanas para representar si una granda fue visitada en un dia dado. \\
 
 \begin{itemize}
 \item $Visit\_i\_Day\_x,  i = 1, .. ,21, x = 1,2$ \\
@@ -13,22 +16,23 @@ Decidimos utilizar variables booleanas para representar si una granda fue visita
 Tambien utilizamos variables booleanas para representar si el camion recorrio, sin importar en que sentido, el camino entre dos de las granjas. \\
 
 \begin{itemize}
-\item $Tour\_i\_j\_Day\_x,  i,j = 1, .. ,21, x = 1,2$ \\
+\item $Tour\_i\_j\_Day\_x,  i,j = 1, .. ,21, x = 1,2 $ \\
 \end{itemize}
 
 \subsubsection{Restricciones}
 
 Las restricciones planteadas son las siguientes: \\
 
-La demanda diaria entre las granjas que se visitan todos los dias, y las granjas que se visitan cada dos dias no superan los 80 galones cada dia.
-FALTAN LOS COEFSSSSSS!!!!!!!!!!!!!!!!!!!!!!! \\
+La demanda diaria entre las granjas que se visitan todos los dias, y las granjas que se visitan cada dos dias no superan los 80 galones cada dia.\\
+Sean $Demand_i$ los coeficientes de la demanda de la granja i dados en el enunciado del problema, con i= 1,..,21 \\
+
 \begin{itemize}
-\item $Visit\_1\_Day\_1 + Visit\_2\_Day\_1 + Visit\_3\_Day\_1 + Visit\_4\_Day\_1 + Visit\_5\_Day\_1 + Visit\_6\_Day\_1 + Visit\_7\_Day\_1 + Visit\_8\_Day\_1 + Visit\_9\_Day\_1 + Visit\_10\_Day\_1 + Visit\_11\_Day\_1 + Visit\_12\_Day\_1 + Visit\_13\_Day\_1 + Visit\_14\_Day\_1 + Visit\_15\_Day\_1 + Visit\_16\_Day\_1 + Visit\_17\_Day\_1 + Visit\_18\_Day\_1 + Visit\_19\_Day\_1 + Visit\_20\_Day\_1 + Visit\_21\_Day\_1 \leq 80$ \\
-\item $Visit\_1\_Day\_2 + Visit\_2\_Day\_2 + Visit\_3\_Day\_2 + Visit\_4\_Day\_2 + Visit\_5\_Day\_2 + Visit\_6\_Day\_2 + Visit\_7\_Day\_2 + Visit\_8\_Day\_2 + Visit\_9\_Day\_2 + Visit\_10\_Day\_2 + Visit\_11\_Day\_2 + Visit\_12\_Day\_2 + Visit\_13\_Day\_2 + Visit\_14\_Day\_2 + Visit\_15\_Day\_2 + Visit\_16\_Day\_2 + Visit\_17\_Day\_2 + Visit\_18\_Day\_2 + Visit\_19\_Day\_2 + Visit\_20\_Day\_2 + Visit\_21\_Day\_2 \leq 80$ \\ 
+\item $\sum_{j=1}^{21} Visit\_i\_Day\_1 \leq 80$ \\
+\item $\sum_{j=1}^{21} Visit\_i\_Day\_2 \leq 80$ \\
 \end{itemize}
 
 
-La granga 11 debe estar en el primer dia ??????????????????? \\
+La granga 11 debe estar en el primer dia. ACLARAR ESTOOOOOOO \\
 \begin{itemize}
 \item $ Visit\_11\_Day\_1 = 1$ \\
 \end{itemize}
@@ -39,10 +43,24 @@ La suma de todos los Tours que llegan a una granja en un dia sumado a la cantida
 \item $ \sum_{j = 1}^{i-1} Tour\_j\_i\_Day\_x + \sum_{j=i+1}^{21} Tour\_i\_j\_Day\_x = 2 * Visit\_i\_Day\_x            , donde	x = 1,2 $\\
 \end{itemize}
 
+Al correr el modelo, junto con la funcion objetivo que sera descrita en la siguiente subseccion, se encontro que la solucion optima encontrada por cplex no era un grafo conexo. Por este motivo, en cada corrida se agrego una restriccion para ir restringiendo las componentes conexas mas peque\~nas que fueron apareciendo. \\
 
+No se admite que la solucion optima contenga las siguientes subcomponentes: \\
+\begin{itemize}
+\item Grajas 2, 5 y 18 para cada dia: $Tour\_2\_5\_i + Tour\_5\_18\_i + Tour\_2\_18\_i = 2$ , para i= 1,2\\
+\item Grajas 6, 7 y 20 para cada dia: $Tour\_6\_7\_i + Tour\_6\_20\_i + Tour\_7\_20\_i = 2$ , para i= 1,2\\
+\item Grajas 8, 9 y 21 para cada dia: $Tour\_8\_9\_i + Tour\_8\_21\_i + Tour\_9\_21\_i = 2$ , para i= 1,2\\
+\end{itemize}
 
+\subsubsection{Funcion objetivo}
+
+La funcion objetivo en este ejercicio es minimizar el recorrido para recorrer todas las granjas de cada dia en el menor recorrido posible.\\
+Para esto, sea $P_i$ la posicion de la granja i dado en el enunciado, para i = 1,..,21. \\
+Sea $Dist_{ij}$ la norma 2 entre los puntos $P_i$ y $P_j$. \\
+Entonces queda planteada la funcion objetivo como la minimizacion de \\
+
+\begin{itemize}
+\item $ \sum_{d=1}^{2} \sum_{i=1}^{21} \sum_{j=i+1}^{21} D_{ij} * Tour\_i\_j\_Day\_d $ \\
+\end{itemize}
 
 \subsection{Resultados}
-
-A continuacion el resultado devuelto por nuestra implementacion del modelo en cplex para el modelo junto con el primer objetivo.\\
-
