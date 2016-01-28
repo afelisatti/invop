@@ -1,6 +1,6 @@
 \section{Ejercicio 12.16}
 \subsection{Modelo}
-En esta extensi'on del ejercicio anterior debemos considerar los nuevos generadores, la reserva de agua y como ambas cosas afectar'an al objetivo y las restricciones de demanda anteriores. 
+En esta extensi'on del ejercicio anterior debemos considerar los nuevos generadores, la reserva de agua y como ambas cosas afectar'an al objetivo y las restricciones de demanda anteriores. Como en el caso anterior, el periodo anterior al primero ser'a el 'ultimo.
 \subsubsection{Variables}
 Agregamos las siguientes variables para cada periodo P:
 \begin{itemize}
@@ -10,5 +10,115 @@ Agregamos las siguientes variables para cada periodo P:
 \item $StartHA\_PeriodP$ y $StartHB\_PeriodP$, representando si los generadores hidroel'ectricos A y B son encendidos en el periodo P (variables booleanas)
 \end{itemize}
 \subsubsection{Restricciones}
+En principio establecemos las reglas sobre el nivel de la reserva. Para todo periodo P, con $L_{G}$ en nivel que baja la reserva por operaci'on de la generadora $G$, tenemos:
+\begin{itemize}
+\item $Reservoir\_Period1 = 16$
+\item $15 \leq Reservoir\_PeriodP \leq 20$
+\item{
+\begin{equation}
+\begin{aligned}
+Reservoir\_PeriodP = & Reservoir\_Period(P-1) \\
+				& + Pumping\_PeriodP \\
+				& - \sum_{G \in \{HA,HB\}} L_{G} RunningG\_PeriodP
+\end{aligned}
+\end{equation}
+}
+\end{itemize}
+Por otro lado, la relaci'on entre las variables de operaci'on y encendido esta dada por, considerando a G el tipo de generador, para cada periodo P:
+\begin{itemize}
+\item $StartG\_PeriodP \geq RunningG\_PeriodP - RunningG\_Period(P-1)$
+\end{itemize}
+Finalmente, sobre la demanda y la demanda extra, debemos agregar al lado derecho de ~\ref{eq:demand} y ~\ref{eq:extrademand} los siguientes t'erminos, respectivamente (con $H_{P}$ la cantidad de horas en el periodo P):
+\begin{itemize}
+\item $900 RunningHA\_PeriodP + 1400 RunningHB\_PeriodP - 3000/H_{P} Pumping\_PeriodP$
+\item $900 RunningHA\_PeriodP + 1400 RunningHB\_PeriodP$
+\end{itemize}
+En un principio creimos que tambi'en debiamos agregar a la demanda extra los MW dedicados a rellenar la reserva (calculados como $3000/H_{P} Pumping\_PeriodP$) pero finalmente nos dimos cuenta de que al estar siendo producidos por las generadoras anteriores, ya estan considerados en la formulaci'on de demanda extra. 
 \subsubsection{Objetivo}
+Para el objetivo debemos agregar a ~\ref{eq:objective} el costo asociado a las generadoras hidroel'ecticas. Considerando nuevamente $H_{P}$ como la cantidad de horas en el periodo P, tenemos:
+\begin{equation} \label{eq:extendedobjective}
+\begin{aligned}
+& 90 H_{P} RunningHA\_PeriodP + 1500 StartHA\_PeriodP +\\
+& 150 H_{P} RunningHB\_PeriodP + 1200 StartHB\_PeriodP \\
+\end{aligned}
+\end{equation}
 \subsection{Soluci'on}
+Obtuvimos el siguiente resultado:\\
+Status = Optimall, Objective = 986880.0\\
+Con la siguiente asignaci'on de variables (por simplicidad no mostramos aquellas cuyo resultado fue 0).\\
+Variables: \\
+Amount\_Type1\_Period1 = 12.0\\
+Amount\_Type1\_Period2 = 12.0\\
+Amount\_Type1\_Period3 = 12.0\\
+Amount\_Type1\_Period4 = 12.0\\
+Amount\_Type1\_Period5 = 12.0\\
+Amount\_Type2\_Period1 = 3.0\\
+Amount\_Type2\_Period2 = 9.0\\
+Amount\_Type2\_Period3 = 9.0\\
+Amount\_Type2\_Period4 = 10.0\\
+Amount\_Type2\_Period5 = 9.0\\
+%Amount\_Type3\_Period1 = 0.0\\
+%Amount\_Type3\_Period2 = 0.0\\
+%Amount\_Type3\_Period3 = 0.0\\
+Amount\_Type3\_Period4 = 1.0\\
+%Amount\_Type3\_Period5 = 0.0\\
+Pumping\_Period1 = 0.9000000000000021\\
+%Pumping\_Period2 = 0.0\\
+Pumping\_Period3 = 1.9000000000000021\\
+%Pumping\_Period4 = 0.0\\
+Pumping\_Period5 = 1.4299999999999962\\
+Reservoir\_Period1 = 16.0\\
+Reservoir\_Period2 = 16.0\\
+Reservoir\_Period3 = 17.900000000000002\\
+Reservoir\_Period4 = 16.490000000000002\\
+Reservoir\_Period5 = 15.099999999999998\\
+%RunHA\_Period1 = -0.0\\
+%RunHA\_Period2 = -0.0\\
+%RunHA\_Period3 = 0.0\\
+%RunHA\_Period4 = 0.0\\
+%RunHA\_Period5 = -0.0\\
+%RunHB\_Period1 = 0.0\\
+%RunHB\_Period2 = -0.0\\
+%RunHB\_Period3 = 0.0\\
+RunHB\_Period4 = 1.0\\
+RunHB\_Period5 = 1.0\\
+%StartHA\_Period1 = -0.0\\
+%StartHA\_Period2 = -0.0\\
+%StartHA\_Period3 = -0.0\\
+%StartHA\_Period4 = -0.0\\
+%StartHA\_Period5 = -0.0\\
+%StartHB\_Period1 = -0.0\\
+%StartHB\_Period2 = -0.0\\
+%StartHB\_Period3 = -0.0\\
+StartHB\_Period4 = 1.0\\
+%StartHB\_Period5 = -0.0\\
+%Started\_Type1\_Period1 = 0.0\\
+%Started\_Type1\_Period2 = 0.0\\
+%Started\_Type1\_Period3 = 0.0\\
+%Started\_Type1\_Period4 = 0.0\\
+%Started\_Type1\_Period5 = 0.0\\
+%Started\_Type2\_Period1 = 0.0\\
+Started\_Type2\_Period2 = 6.0\\
+%Started\_Type2\_Period3 = 0.0\\
+Started\_Type2\_Period4 = 1.0\\
+%Started\_Type2\_Period5 = 0.0\\
+%Started\_Type3\_Period1 = 0.0\\
+%Started\_Type3\_Period2 = 0.0\\
+%Started\_Type3\_Period3 = 0.0\\
+Started\_Type3\_Period4 = 1.0\\
+%Started\_Type3\_Period5 = 0.0\\
+Watts\_Type1\_Period1 = 10200.0\\
+Watts\_Type1\_Period2 = 14250.0\\
+Watts\_Type1\_Period3 = 10200.0\\
+Watts\_Type1\_Period4 = 19600.0\\
+Watts\_Type1\_Period5 = 10564.999999999998\\
+Watts\_Type2\_Period1 = 5250.0\\
+Watts\_Type2\_Period2 = 15750.0\\
+Watts\_Type2\_Period3 = 15750.0\\
+Watts\_Type2\_Period4 = 17500.0\\
+Watts\_Type2\_Period5 = 15750.0\\
+%Watts\_Type3\_Period1 = 0.0\\
+%Watts\_Type3\_Period2 = 0.0\\
+%Watts\_Type3\_Period3 = 0.0\\
+Watts\_Type3\_Period4 = 1500.0\\
+%Watts\_Type3\_Period5 = 0.0\\
