@@ -57,7 +57,7 @@ public class Exercise12_16 extends Exercise12_15
             //Respect range
             IloLinearNumExpr reservoirMinLevel = cplex.linearNumExpr();
             reservoirMinLevel.addTerm(1, reservoir);
-            if (period == 5)
+            if (period == 1)
             {
                 cplex.addEq(reservoirMinLevel, 16);
             }
@@ -75,28 +75,26 @@ public class Exercise12_16 extends Exercise12_15
             reservoirOrigin.addTerm(0.47*hours[period-1], hydroB);
             reservoirOrigin.addTerm(-1, pumping);
 
-            IloLinearNumExpr startingA = cplex.linearNumExpr();
-            startingA.addTerm(1, startA);
-            startingA.addTerm(-1, hydroA);
-            IloLinearNumExpr startingB = cplex.linearNumExpr();
-            startingB.addTerm(1, startB);
-            startingB.addTerm(-1, hydroB);
-
             int previousPeriod = period - 1;
 
             if (period == 1)
             {
                 previousPeriod = 5;
-                cplex.addEq(reservoirOrigin, 16);
             }
-            else
-            {
-                reservoirOrigin.addTerm(-1, getVariable(getSimpleName(Variable.Reservoir, period - 1)));
-                cplex.addEq(reservoirOrigin, 0);
-            }
+            reservoirOrigin.addTerm(-1, getVariable(getSimpleName(Variable.Reservoir, previousPeriod)));
+            cplex.addEq(reservoirOrigin, 0);
+
+
+            IloLinearNumExpr startingA = cplex.linearNumExpr();
+            startingA.addTerm(1, startA);
+            startingA.addTerm(-1, hydroA);
             startingA.addTerm(1, getVariable(getSimpleName(Variable.RunHA, previousPeriod)));
-            startingB.addTerm(1, getVariable(getSimpleName(Variable.RunHB, previousPeriod)));
             cplex.addGe(startingA, 0);
+
+            IloLinearNumExpr startingB = cplex.linearNumExpr();
+            startingB.addTerm(1, startB);
+            startingB.addTerm(-1, hydroB);
+            startingB.addTerm(1, getVariable(getSimpleName(Variable.RunHB, previousPeriod)));
             cplex.addGe(startingB, 0);
         }
         super.setUpModel(cplex);
@@ -127,7 +125,6 @@ public class Exercise12_16 extends Exercise12_15
         satisfyDemand.addTerm(1400, getVariable(getSimpleName(Variable.RunHB, period)));
         satisfyDemand.addTerm(-3000/hours[period - 1], getVariable(getSimpleName(Variable.Pumping, period)));
 
-        satisfyExtendedDemand.addTerm(3000/hours[period - 1], getVariable(getSimpleName(Variable.Pumping, period)));
         satisfyExtendedDemand.addTerm(900, getVariable(getSimpleName(Variable.RunHA, period)));
         satisfyExtendedDemand.addTerm(1400, getVariable(getSimpleName(Variable.RunHB, period)));
 

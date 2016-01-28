@@ -9,13 +9,13 @@ En este ejercicio tendremos 3 variables para cada periodo P y cada tipo de gener
 \end{itemize}
 \subsubsection{Restricciones}
 En principio, debemos garantizar la satisfacci'on de la producci'on por periodo. Entonces, para cada periodo P, con T el tipo de generador y $D_{P}$ la demanda del periodo P, tenemos:
-\begin{itemize}
-\item $\sum_{T}Watts\_TypeT\_PeriodP \geq D_{P}$
-\end{itemize}
+\begin{equation} \label{eq:demand}
+\sum_{T}Watts\_TypeT\_PeriodP \geq D_{P}
+\end{equation}
 Adem'as debemos garantizar que podemos producir un 15\% m'as si operamos a la m'axima potencia. Luego, para cada periodo P, con $M_{T}$ el m'aximo nivel de producci'on del generador de tipo T, tenemos:
-\begin{itemize}
-\item $\sum_{T} M_{T} Amount\_TypeT\_PeriodP \geq D_{P} \times 1.15$
-\end{itemize}
+\begin{equation} \label{eq:extrademand}
+\sum_{T} M_{T} Amount\_TypeT\_PeriodP \geq D_{P} \times 1.15
+\end{equation}
 Cada tipo de generador tiene una cantidad de unidades m'axima, con lo cual tenemos para cada periodo P, tipo de generador T, con $U_{T}$ la cantidad de unidades disponibles de T:
 \begin{itemize}
 \item $Amount\_TypeT\_PeriodP \leq U_{T}$
@@ -30,7 +30,7 @@ Finalmente debemos establecer la relaci'on entre los generadores operando y los 
 \end{itemize}
 \subsubsection{Objetivo}
 Nuestro objetivo es minimizar el costo de producci'on, donde debemos considerar las unidades encendidas, las unidades operando con su costo m'inimo y de exceso. Entonces, siendo $S_{T}$ el costo de encender una unidad de tipo T, $Cm_{T}$ el costo de operar al m'inimo, $P_{T}$ el precio de operaci'on por fuera del m'inimo, $m_{T}$ el nivel de producci'on m'inimo y $H_{P}$ la cantidad de horas en el periodo P, tenemos como objetivo minimizar:
-\begin{equation}
+\begin{equation} \label{eq:objective}
 \begin{aligned}
 \sum_{P} \sum_{T} 	& S_{T} Started\_TypeT\_PeriodP \\
 				& + Cm_{T} H_{P} Amount\_TypeT\_PeriodP \\
@@ -93,4 +93,4 @@ Period2 = 6.0\\
 Period3 = 12.0\\
 Period4 = 6.0\\
 Period5 = 12.0\\
-Finalmente, eliminando la restricci'on para garantizar el 15% extra, el objetivo nos dio 987790, con lo cual el costo de mantener esa garant'ia es de 750 libras.
+Finalmente, eliminando la restricci'on para garantizar el 15\% extra, el objetivo nos dio 987790, con lo cual el costo de mantener esa garant'ia es de 750 libras.
