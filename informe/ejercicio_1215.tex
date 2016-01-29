@@ -3,9 +3,9 @@
 \subsubsection{Variables}
 En este ejercicio tendremos 3 variables para cada periodo P y cada tipo de generador T:
 \begin{itemize}
-\item $Amount\_TypeT\_PeriodP$, representando la cantidad de generadores de tipo T operando en el periodo P (variables enteras)
-\item $Started\_TypeT\_PeriodP$, representando la cantidad de generadores de tipo T encendidos en el periodo P (variables enteras)
-\item $Watts\_TypeT\_PeriodP$, representando la cantidad de MW producidos por los generadores de tipo T en el periodo P
+\item $Amount\_TypeT\_PeriodP$, representando la cantidad de generadores de tipo T operando en el periodo P (variables enteras).
+\item $Started\_TypeT\_PeriodP$, representando la cantidad de generadores de tipo T encendidos en el periodo P (variables enteras).
+\item $Watts\_TypeT\_PeriodP$, representando la cantidad de MW producidos por los generadores de tipo T en el periodo P.
 \end{itemize}
 \subsubsection{Restricciones}
 En principio, debemos garantizar la satisfacci'on de la producci'on por periodo. Entonces, para cada periodo P, con T el tipo de generador y $D_{P}$ la demanda del periodo P, tenemos:
@@ -38,10 +38,10 @@ Nuestro objetivo es minimizar el costo de producci'on, donde debemos considerar 
 \end{aligned}
 \end{equation}
 \subsection{Soluci'on}
-Obtuvimos el siguiente resultado:\\
-Status = Optimal, Objective = 988540.0000000002\\
+Obtuvimos el siguiente resultado: Status = Optimal, Objective = 988540.0000000002\\
 Con la siguiente asignaci'on de variables (por simplicidad no listamos aquellas cuyo resultado fue 0):\\
-Variables: \\
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{\noindent
 Amount\_Type1\_Period1 = 12.0\\
 Amount\_Type1\_Period2 = 12.0\\
 Amount\_Type1\_Period3 = 12.0\\
@@ -65,7 +65,9 @@ Amount\_Type3\_Period4 = 2.0\\
 %Started\_Type2\_Period1 = -0.0\\
 Started\_Type2\_Period2 = 4.999999999999962\\
 %Started\_Type2\_Period3 = -0.0\\
-Started\_Type2\_Period4 = 1.0000000000000036\\
+Started\_Type2\_Period4 = 1.0000000000000036
+}
+\ParallelRText{\noindent
 %Started\_Type2\_Period5 = -0.0\\
 %Started\_Type3\_Period1 = -0.0\\
 %Started\_Type3\_Period2 = -0.0\\
@@ -86,11 +88,19 @@ Watts\_Type2\_Period5 = 15750.000000000007\\
 %Watts\_Type3\_Period2 = 0.0\\
 %Watts\_Type3\_Period3 = -5.529431079676072E-12\\
 Watts\_Type3\_Period4 = 3000.0\\
-%Watts\_Type3\_Period5 = 0.0\\
+%Watts\_Type3\_Period5 = 0.0
+}
+\end{Parallel}
 Para obtener el costo marginal de producci'on de cada periodo agregamos las restricciones de demanda en cada uno y pedimos su dual. Dado que este es un problema mixto, para obtener los valores duales primero tuvimos que fijar los valores del resultado. Los costos marginales que obtuvimos fueron (en MW, debemos dividir por las horas del periodo para obtener la medida usual de las tarifas, dada en MWh): \\
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{\noindent
 Period1 = 7.800000000000001\\
 Period2 = 6.0\\
-Period3 = 12.0\\
+Period3 = 12.0
+}
+\ParallelRText{\noindent
 Period4 = 6.0\\
-Period5 = 12.0\\
+Period5 = 12.0
+}
+\end{Parallel}
 Finalmente, eliminando la restricci'on para garantizar el 15\% extra, el objetivo nos dio 987790, con lo cual el costo de mantener esa garant'ia es de 750 libras.

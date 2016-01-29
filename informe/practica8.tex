@@ -1,11 +1,13 @@
 \section{Ejercicios Pr'actica 8}
 \subsection{Ejercicio 20.a}
+\subsubsection{Enunciado}
 Encontrar una desigualdad v'alida para $X$ que corte el punto $x^{*}$ dado, donde
 \begin{center}
 $X = \{x \in B^{5} / 9x_1 + 8x_2 + 6x_3 + 6x_4 + 5x_5 \leq 14\}$ \\
 $x^{*} = (0, 5/8, 3/4, 3/4, 0)$
 \end{center}
-Utilizando el m'etodo de Chv'atal-Gomory podemos multiplicar la desigualdad por $1/6$ y luego aplicar la funci'on floor a cada coeficiente:
+\subsubsection{Soluci'on}
+Utilizando el m'etodo de Chv'atal-Gomory podemos multiplicar la desigualdad por $1/6$ y luego aplicar la funci'on $\left \lfloor{}\right \rfloor$ a cada coeficiente:
 \begin{center}
 \begin{equation}
 9/6 x_1 + 8/6 x_2 + 6/6 x_3 + 6/6 x_4 + 5/6 x_5 \leq 14/6
@@ -24,9 +26,10 @@ $0 + 5/8 + 3/4 + 3/4 = 17/8 > 2$
 Entonces ~\ref{eq:solve} es una desigualdad v'alida y corta a $x^{*}$.
 
 \subsection{Ejercicio 22}
+\subsubsection{Enunciado}
 Dado un grafo $G = (V, E)$ con $n = |V|$ considerar el conjunto de vectores soluciones de $X$ del
 problema de conjunto independiente $X = \{ x\in B^{n}/ x_{i}+x_{j}\leq 1$ para toda arista $e =(i,j) \}$. Mostrar que la desigualdad de clique $\sum_{j\in C} x_{j} \leq 1$ para $C$ clique maximal de $G$, es v'alida. 
-
+\subsubsection{Soluci'on}
 Lo demostraremos por el absurdo. Si la desigualdad de clique fuese inv'alida, entonces tendriamos:
 \begin{equation}
 \sum_{j\in C} x_{j} > 1

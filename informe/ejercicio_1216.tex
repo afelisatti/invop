@@ -1,13 +1,13 @@
 \section{Ejercicio 12.16}
 \subsection{Modelo}
-En esta extensi'on del ejercicio anterior debemos considerar los nuevos generadores, la reserva de agua y como ambas cosas afectar'an al objetivo y las restricciones de demanda anteriores. Como en el caso anterior, el periodo anterior al primero ser'a el 'ultimo.
+En esta extensi'on del ejercicio anterior debemos considerar los nuevos generadores, la reserva de agua y c'omo ambas cosas afectar'an al objetivo y las restricciones de demanda anteriores. Como en el caso anterior, el periodo anterior al primero ser'a el 'ultimo.
 \subsubsection{Variables}
 Agregamos las siguientes variables para cada periodo P:
 \begin{itemize}
-\item $Reservoir\_PeriodP$, representando la medida de la reserva en el periodo P
-\item $Pumping\_PeriodP$, representando los metros que se modifica la reserva en el periodo P
-\item $RunningHA\_PeriodP$ y $RunningHB\_PeriodP$, representando si los generadores hidroel'ectricos A y B estan operando en el periodo P (variables booleanas)
-\item $StartHA\_PeriodP$ y $StartHB\_PeriodP$, representando si los generadores hidroel'ectricos A y B son encendidos en el periodo P (variables booleanas)
+\item $Reservoir\_PeriodP$, representando la medida de la reserva en el periodo P.
+\item $Pumping\_PeriodP$, representando los metros que se modifica la reserva en el periodo P.
+\item $RunningHA\_PeriodP$ y $RunningHB\_PeriodP$, representando si los generadores hidroel'ectricos A y B estan operando en el periodo P (variables booleanas).
+\item $StartHA\_PeriodP$ y $StartHB\_PeriodP$, representando si los generadores hidroel'ectricos A y B son encendidos en el periodo P (variables booleanas).
 \end{itemize}
 \subsubsection{Restricciones}
 En principio establecemos las reglas sobre el nivel de la reserva. Para todo periodo P, con $L_{G}$ en nivel que baja la reserva por operaci'on de la generadora $G$, tenemos:
@@ -43,10 +43,10 @@ Para el objetivo debemos agregar a ~\ref{eq:objective} el costo asociado a las g
 \end{aligned}
 \end{equation}
 \subsection{Soluci'on}
-Obtuvimos el siguiente resultado:\\
-Status = Optimall, Objective = 986880.0\\
-Con la siguiente asignaci'on de variables (por simplicidad no mostramos aquellas cuyo resultado fue 0).\\
-Variables: \\
+Obtuvimos el siguiente resultado: Status = Optimall, Objective = 986880.0\\
+Con la siguiente asignaci'on de variables (por simplicidad no mostramos aquellas cuyo resultado fue 0): \\
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{\noindent
 Amount\_Type1\_Period1 = 12.0\\
 Amount\_Type1\_Period2 = 12.0\\
 Amount\_Type1\_Period3 = 12.0\\
@@ -70,7 +70,9 @@ Pumping\_Period5 = 1.4299999999999962\\
 Reservoir\_Period1 = 16.0\\
 Reservoir\_Period2 = 16.0\\
 Reservoir\_Period3 = 17.900000000000002\\
-Reservoir\_Period4 = 16.490000000000002\\
+Reservoir\_Period4 = 16.490000000000002
+}
+\ParallelRText{\noindent
 Reservoir\_Period5 = 15.099999999999998\\
 %RunHA\_Period1 = -0.0\\
 %RunHA\_Period2 = -0.0\\
@@ -121,4 +123,6 @@ Watts\_Type2\_Period5 = 15750.0\\
 %Watts\_Type3\_Period2 = 0.0\\
 %Watts\_Type3\_Period3 = 0.0\\
 Watts\_Type3\_Period4 = 1500.0\\
-%Watts\_Type3\_Period5 = 0.0\\
+%Watts\_Type3\_Period5 = 0.0
+}
+\end{Parallel}

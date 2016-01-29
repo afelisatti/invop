@@ -1,95 +1,97 @@
 \section{Ejercicio 12.23}
 \subsection{Modelo}
+Asumimos para este ejercicio que solo hay 2 d'ias que modelar, y que se repetir'an en el tiempo.
 \subsubsection{Variables}
-Asumimos para este ejercicio que solo hay 2 dias que modelar, y que se repetiran en el tiempo. \\
-Decidimos utilizar variables booleanas para representar si una granja fue visitada en un dia dado.
+Decidimos utilizar variables booleanas para representar si una granja fue visitada en un d'ia dado.
 \begin{itemize}
 \item $Visit\_i\_Day\_x,  i = 1, .. ,21, x = 1,2$
 \end{itemize}
-Tambien utilizamos variables booleanas para representar si el camion recorrio, sin importar en que sentido, el camino entre dos de las granjas.
+Tambi'en utilizamos variables booleanas para representar si el cami'on recorri'o, sin importar en que sentido, el camino entre dos de las granjas.
 \begin{itemize}
 \item $Tour\_i\_j\_Day\_x,  i,j = 1, .. ,21, x = 1,2 $
 \end{itemize}
 \subsubsection{Restricciones}
 Las restricciones planteadas son las siguientes: \\
-La demanda diaria entre las granjas que se visitan todos los dias, y las granjas que se visitan cada dos dias no superan los 80 mil litros cada dia.\\
+La demanda diaria entre las granjas que se visitan todos los d'ias, y las granjas que se visitan cada dos d'ias no superan los 80 mil litros cada d'ia.\\
 Sean $Demand_i$ los coeficientes de la demanda de la granja $i$ dados en el enunciado del problema, con $i= 1,..,21$
 \begin{itemize}
-\item $\sum_{j=1}^{21} Demand_i * Visit\_i\_Day\_1 \leq 80$
-\item $\sum_{j=1}^{21} Demand_i * Visit\_i\_Day\_2 \leq 80$
+\item $\sum_{j=1}^{21} Demand_i * Visit\_i\_Day\_x \leq 80$ donde $x = 1,2$
+\end{itemize}
+La suma de todos los Tours que llegan a una granja en un d'ia sumado a la cantidad de tours que salen de esa granja ese d'ia suman 2 * (1 si fue visitada, 0 sino). Es decir, si se llega a una granja en un determinado d'ia (pues se la visita), tambi'en se debe partir de ella hacia otra granja.
+\begin{itemize}
+\item $ \sum_{j = 1}^{i-1} Tour\_j\_i\_Day\_x + \sum_{j=i+1}^{21} Tour\_i\_j\_Day\_x = 2 * Visit\_i\_Day\_x$ donde $x = 1,2 $
 \end{itemize}
 Al comenzar a probar soluciones, las mismas empezaron a repetirse alternandose entre un d'ia y el otro. Por esta raz'on agregamos la siguiente restricci'on que establece al d'ia 1 como aquel donde se visita la primer granja a visitarse d'ia por medio: la 11.
 \begin{itemize}
 \item $ Visit\_11\_Day\_1 = 1$
 \end{itemize}
-La suma de todos los Tours que llegan a una granja en un dia sumado a la cantidad de tours que salen de esa granja ese dia suman 2 * (1 si fue visitada, 0 sino).
-\begin{itemize}
-\item $ \sum_{j = 1}^{i-1} Tour\_j\_i\_Day\_x + \sum_{j=i+1}^{21} Tour\_i\_j\_Day\_x = 2 * Visit\_i\_Day\_x            , donde	x = 1,2 $
-\end{itemize}
-Al correr el modelo, junto con la funcion objetivo que ser'a descrita en la siguiente subsecci'on, se encontr'o que la soluci'on 'optima encontrada por no era un grafo conexo. Por este motivo, en cada corrida se agreg'o una restricci'on para ir restringiendo las componentes conexas m'as peque\~nas que fueron apareciendo. \\
+Al correr el modelo, junto con la funci'on objetivo que ser'a descrita en la siguiente subsecci'on, se encontr'o que la soluci'on 'optima encontrada no era un grafo conexo: ten'ia ciclos. Por este motivo, en cada corrida se agreg'o una restricci'on para ir restringiendo las componentes conexas m'as peque\~nas que fueron apareciendo (restricciones de subtour). \\
 No se admite que la soluci'on 'optima contenga las siguientes subcomponentes:
 \begin{itemize}
-\item Grajas 2, 5 y 18 para cada dia: $Tour\_2\_5\_i + Tour\_5\_18\_i + Tour\_2\_18\_i \leq 2$ , para i= 1,2
-\item Grajas 6, 7 y 20 para cada dia: $Tour\_6\_7\_i + Tour\_6\_20\_i + Tour\_7\_20\_i \leq 2$ , para i= 1,2
-\item Grajas 8, 9 y 21 para cada dia: $Tour\_8\_9\_i + Tour\_8\_21\_i + Tour\_9\_21\_i \leq 2$ , para i= 1,2
+\item Grajas 2, 5 y 18 para cada d'ia: $Tour\_2\_5\_i + Tour\_5\_18\_i + Tour\_2\_18\_i \leq 2$ , para i= 1,2
+\item Grajas 6, 7 y 20 para cada d'ia: $Tour\_6\_7\_i + Tour\_6\_20\_i + Tour\_7\_20\_i \leq 2$ , para i= 1,2
+\item Grajas 8, 9 y 21 para cada d'ia: $Tour\_8\_9\_i + Tour\_8\_21\_i + Tour\_9\_21\_i \leq 2$ , para i= 1,2
 \end{itemize}
 \subsubsection{Objetivo}
-La funci'on objetivo en este ejercicio es minimizar el recorrido para recorrer todas las granjas de cada d'ia en la menor distancia posible.\\
-Para esto, sea $P_i$ la posicion de la granja $i$ dado en el enunciado, para $i = 1,..,21$. \\
-Sea $Dist_{ij}$ la norma 2 entre los puntos $P_i$ y $P_j$. \\
-Entonces queda planteada la funcion objetivo como la minimizacion de
-\begin{itemize}
-\item $ \sum_{d=1}^{2} \sum_{i=1}^{21} \sum_{j=i+1}^{21} D_{ij} * Tour\_i\_j\_Day\_d $
-\end{itemize}
+La funci'on objetivo en este ejercicio es minimizar el recorrido para recorrer todas las granjas de cada d'ia en la menor distancia posible. Para esto, sea $P_i$ la posici'on de la granja $i$ dado en el enunciado (por 10 millas), para $i = 1,..,21$, sea $Dist_{ij}$ la norma 2 entre los puntos $P_i$ y $P_j$, entonces queda planteada la funci'on objetivo como la minimizaci'on de:
+\begin{equation}
+\sum_{d=1}^{2} \sum_{i=1}^{21} \sum_{j=i+1}^{21} D_{ij} * Tour\_i\_j\_Day\_d
+\end{equation}
 \subsection{Soluci'on}
-A continuacion se exponen los resulatados obtenidos con cplex para el modelo presentado y su funcion objetivo, que por simplicidad, al ser muchas variables solo se escribiran las variables $Visit\_i\_Day_x$ y los recorridos obtenidos, que son las variables $Tour\_i\_j\_Day\_x$ que resultaron con valor 1: \\
-Status = Optimal\\
-Objective = 123.05623785349735\\
-Variables: \\
-$Visit\_10\_Day1 = 1.0$\\
-$Visit\_10\_Day2 = 1.0$\\
-$Visit\_11\_Day1 = 1.0$\\
-$Visit\_11\_Day2 = 0.0$\\
-$Visit\_12\_Day1 = 0.0$\\
-$Visit\_12\_Day2 = 1.0$\\
-$Visit\_13\_Day1 = 1.0$\\
-$Visit\_13\_Day2 = 0.0$\\
-$Visit\_14\_Day1 = 0.0$\\
-$Visit\_14\_Day2 = 1.0$\\
-$Visit\_15\_Day1 = 0.0$\\
-$Visit\_15\_Day2 = 1.0$\\
-$Visit\_16\_Day1 = 1.0$\\
-$Visit\_16\_Day2 = 0.0$\\
-$Visit\_17\_Day1 = 1.0$\\
-$Visit\_17\_Day2 = 0.0$\\
-$Visit\_18\_Day1 = 1.0$\\
-$Visit\_18\_Day2 = 0.0$\\
-$Visit\_19\_Day1 = 1.0$\\
-$Visit\_19\_Day2 = 0.0$\\
+A continuaci'on se exponen los resultados obtenidos para el modelo presentado y su funci'on objetivo, que por simplicidad, al ser muchas variables solo se escribir'an las variables $Visit\_i\_Day_x$ y los recorridos obtenidos, que son las variables $Tour\_i\_j\_Day\_x$ que resultaron con valor 1: \\
+Status = Optimal, Objective = 123.05623785349735, Variables: \\
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{\noindent
 $Visit\_1\_Day1 = 1.0$\\
-$Visit\_1\_Day2 = 1.0$\\
-$Visit\_20\_Day1 = 0.0$\\
-$Visit\_20\_Day2 = 1.0$\\
-$Visit\_21\_Day1 = 0.0$\\
-$Visit\_21\_Day2 = 1.0$\\
 $Visit\_2\_Day1 = 1.0$\\
-$Visit\_2\_Day2 = 1.0$\\
 $Visit\_3\_Day1 = 1.0$\\
-$Visit\_3\_Day2 = 1.0$\\
 $Visit\_4\_Day1 = 1.0$\\
-$Visit\_4\_Day2 = 1.0$\\
 $Visit\_5\_Day1 = 1.0$\\
-$Visit\_5\_Day2 = 1.0$\\
 $Visit\_6\_Day1 = 1.0$\\
-$Visit\_6\_Day2 = 1.0$\\
 $Visit\_7\_Day1 = 1.0$\\
-$Visit\_7\_Day2 = 1.0$\\
 $Visit\_8\_Day1 = 1.0$\\
-$Visit\_8\_Day2 = 1.0$\\
 $Visit\_9\_Day1 = 1.0$\\
+$Visit\_10\_Day1 = 1.0$\\
+$Visit\_11\_Day1 = 1.0$\\
+$Visit\_12\_Day1 = 0.0$\\
+$Visit\_13\_Day1 = 1.0$\\
+$Visit\_14\_Day1 = 0.0$\\
+$Visit\_15\_Day1 = 0.0$\\
+$Visit\_16\_Day1 = 1.0$\\
+$Visit\_17\_Day1 = 1.0$\\
+$Visit\_18\_Day1 = 1.0$\\
+$Visit\_19\_Day1 = 1.0$\\
+$Visit\_20\_Day1 = 0.0$\\
+$Visit\_21\_Day1 = 0.0$
+}
+\ParallelRText{\noindent
+$Visit\_1\_Day2 = 1.0$\\
+$Visit\_2\_Day2 = 1.0$\\
+$Visit\_3\_Day2 = 1.0$\\
+$Visit\_4\_Day2 = 1.0$\\
+$Visit\_5\_Day2 = 1.0$\\
+$Visit\_6\_Day2 = 1.0$\\
+$Visit\_7\_Day2 = 1.0$\\
+$Visit\_8\_Day2 = 1.0$\\
 $Visit\_9\_Day2 = 1.0$\\
+$Visit\_10\_Day2 = 1.0$\\
+$Visit\_11\_Day2 = 0.0$\\
+$Visit\_12\_Day2 = 1.0$\\
+$Visit\_13\_Day2 = 0.0$\\
+$Visit\_14\_Day2 = 1.0$\\
+$Visit\_15\_Day2 = 1.0$\\
+$Visit\_16\_Day2 = 0.0$\\
+$Visit\_17\_Day2 = 0.0$\\
+$Visit\_18\_Day2 = 0.0$\\
+$Visit\_19\_Day2 = 0.0$\\
+$Visit\_20\_Day2 = 1.0$\\
+$Visit\_21\_Day2 = 1.0$\\
+}
+\end{Parallel}
 Este es el resultado con los caminos que se extraen al leer las variables de los Tours que terminaron con valor 1: \\
-Path day 1:\\
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{
+Camino d'ia 1\\
 $Tour\_1\_10\_Day1$\\
 $Tour\_1\_17\_Day1$\\
 $Tour\_2\_17\_Day1$\\
@@ -105,8 +107,10 @@ $Tour\_7\_11\_Day1$\\
 $Tour\_8\_9\_Day1$\\
 $Tour\_8\_13\_Day1$\\
 $Tour\_9\_11\_Day1$\\
-$Tour\_16\_19\_Day1$ \\
-Path day 2:\\
+$Tour\_16\_19\_Day1$ 
+}
+\ParallelRText{
+Camino d'ia 2\\
 $Tour\_1\_2\_Day2$\\
 $Tour\_1\_10\_Day2$\\
 $Tour\_2\_5\_Day2$\\
@@ -121,4 +125,6 @@ $Tour\_7\_9\_Day2$\\
 $Tour\_7\_20\_Day2$\\
 $Tour\_8\_12\_Day2$\\
 $Tour\_8\_21\_Day2$\\
-$Tour\_9\_21\_Day2$\\
+$Tour\_9\_21\_Day2$
+}
+\end{Parallel}
