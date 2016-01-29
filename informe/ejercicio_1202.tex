@@ -4,7 +4,7 @@ Para esta extension del ejercicio 12.1 mantenemos todo lo mismo, agregando algun
 \subsubsection{Variables}
 Incluimos ahora para cada mes M y cada tipo de aceite A una variable booleana $M\_A$ que resprenta el uso de A en el mes M.
 \subsubsection{Restricciones}
-Sabemos que de usarse un aceite se debe usar mas de 20 toneladas y por el ejercicio anterior tenemos un limite superior para los aceites vegetales y no vegetales (200 y 250 respectivamente). Entonces para cada mes M y cada tipo de aceite A, con $S_{A}$ el l'imite superior de A seg'un vegetal o no vegetal, tenemos:
+Sabemos que de usarse un aceite se debe usar m'as de 20 toneladas y por el ejercicio anterior tenemos un l'imite superior para los aceites vegetales y no vegetales (200 y 250 respectivamente). Entonces para cada mes M y cada tipo de aceite A, con $S_{A}$ el l'imite superior de A seg'un vegetal o no vegetal, tenemos:
 \begin{itemize}
 \item$20 M\_A \leq M\_A\_Refined$
 \item$M\_A\_Refined \leq S_{A} M\_A$
@@ -21,11 +21,11 @@ Finalmente, para garantizar que si se usa VEG1 o VEG2 tambien se use OIL3, para 
 \subsubsection{Objetivo}
 El objetivo sigue siendo el mismo que en el ejercicio anterior: maximizar la ganancia total.
 \subsection{Soluci'on}
-Obtuvimos la siguiente soluci'on:\\
-Status = Optimal, Objective = 100278.70370370371\\
-Con la siguiente asignaci'on de variables (por simplicidad no listamos aquellas cuyo resultado fue 0).\\
-Variables: \\
-%1\_Oil1 = -0.0\\
+Obtuvimos el siguiente resultado: Status = Optimal, Objective = 100278.7037037`0371\\
+Con la siguiente asignaci'on de variables (por simplicidad no listamos aquellas cuyo resultado fue 0): \\
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{\noindent
+$%1\_Oil1 = -0.0\\
 %1\_Oil1\_Bought = 0.0\\
 %1\_Oil1\_Refined = 0.0\\
 1\_Oil1\_Saved = 500.0\\
@@ -84,8 +84,10 @@ Variables: \\
 3\_Veg2 = 1.0\\
 %3\_Veg2\_Bought = 0.0\\
 3\_Veg2\_Refined = 200.0\\
-3\_Veg2\_Saved = 70.3703703703705\\
-%4\_Oil1 = -0.0\\
+3\_Veg2\_Saved = 70.3703703703705$
+}
+\ParallelRText{\noindent
+$%4\_Oil1 = -0.0\\
 %4\_Oil1\_Bought = 0.0\\
 %4\_Oil1\_Refined = 0.0\\
 4\_Oil1\_Saved = 500.0\\
@@ -144,4 +146,8 @@ Variables: \\
 6\_Veg2 = 1.0\\
 6\_Veg2\_Bought = 629.6296296296296\\
 6\_Veg2\_Refined = 200.0\\
-6\_Veg2\_Saved = 500.0\\
+6\_Veg2\_Saved = 500.0$
+}
+\end{Parallel}
+
+
