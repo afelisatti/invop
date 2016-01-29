@@ -1,7 +1,7 @@
 \section{Ejercicio 12.13}
 \subsection{Modelo}
 \subsubsection{Variables}
-Las variables ${D1}_i$, i = 1, .. ,23 representan si el retailer i pertenece al grupo ${D}_1$. Son variablres enteras. \\
+Las variables ${D1}_i$, $i = 1, .. ,23$ representan si el retailer $i$ pertenece al grupo ${D}_1$. Son variables enteras. \\
 %${D1}_1$
 %${D1}_2$
 %${D1}_3$
@@ -25,7 +25,7 @@ Las variables ${D1}_i$, i = 1, .. ,23 representan si el retailer i pertenece al 
 %${D1}_{21}$
 %${D1}_{22}$
 %${D1}_{23}$  \\
-Variables slack para las restricciones. Las variables plusXXX y minusXXX son las variables slack que me permiten que los valores controlados por el grupo $D_1$ pueda variar entre 35 y 45 porciento del total a controlar en cada area. \\
+Variables slack para las restricciones. Las variables plusXXX y minusXXX son las variables slack que permiten que los valores controlados por el grupo $D_1$ pueda variar entre 35 y 45 \% del total a controlar en cada 'area. \\
 Variables slack sobre el control de Delivery Points:
 \begin{itemize}
 \item $minusDelivery$ 
@@ -52,8 +52,8 @@ Variables slack sobre el control del Spirit Market:
 \item $plusSpirit$ 
 \end{itemize}
 \subsubsection{Restricciones}
-A continuacion las restricciones impuestas en el modelo y una breve explicacion sobre cada una. \\
-El retailer i-esimo o pertenece o no pertenece a $D_1$. Solo puede tomar valores 0 o 1. 
+A continuaci'on detallamos las restricciones impuestas en el modelo y una breve explicaci'on sobre cada una. \\
+El retailer $i$-'esimo o pertenece o no pertenece a $D_1$. Solo puede tomar valores 0 o 1. 
 \begin{itemize}
 \item $0 \leq {D1}_i \leq 1 ,  i = 1,..,23 $ \\
 \end{itemize}
@@ -80,29 +80,29 @@ El retailer i-esimo o pertenece o no pertenece a $D_1$. Solo puede tomar valores
 %$0 \leq {D1}_{21} \leq 1$ \\
 %$0 \leq {D1}_{22} \leq 1$ \\
 %$0 \leq {D1}_{23} \leq 1$ \\
-El grupo $D_1$ tiene entre el 35 y el 45 porciento del total del total de Delivery Points 
+El grupo $D_1$ tiene entre el 35 y el 45 \% del total del total de Delivery Points 
 \begin{itemize}
 \item 11 ${D1}_1$ + 47 ${D1}_2$ + 44 ${D1}_3$ + 25 ${D1}_4$ + 10 ${D1}_5$ + 26${D1}_6$ + 26 ${D1}_7$ + 54 ${D1}_8$ + 18 ${D1}_9$ + 51 ${D1}_{10}$ + 20 ${D1}_{11}$ + 105 ${D1}_{12}$ + 7 ${D1}_{13}$ + 16 ${D1}_{14}$ + 34 ${D1}_{15}$ + 100 ${D1}_{16}$ + 50 ${D1}_{17}$ + 21 ${D1}_{18}$ + 11 ${D1}_{19}$ + 19 ${D1}_{20}$ + 14 ${D1}_{21}$ + 10 ${D1}_{22}$ + 11 ${D1}_{23}$ + $plusDelivery$ - $minusDelivery = $ 292
 \end{itemize}
-El grupo $D_1$ suma entre el 35 y el 45 porciento del total del total de Spirit Markets
+El grupo $D_1$ suma entre el 35 y el 45 \% del total del total de Spirit Markets
 \begin{itemize}
 \item 34 ${D1}_1$ + 411 ${D1}_2$ + 82 ${D1}_3$ + 157 ${D1}_4$ + 5 ${D1}_5$ + 183${D1}_6$ + 14 ${D1}_7$ + 215 ${D1}_8$ + 102 ${D1}_9$ + 21 ${D1}_{10}$ + 54 ${D1}_{11}$ + 0 ${D1}_{12}$ + 6 ${D1}_{13}$ + 96 ${D1}_{14}$ + 118 ${D1}_{15}$ + 112 ${D1}_{16}$ + 535 ${D1}_{17}$ + 8 ${D1}_{18}$ + 53 ${D1}_{19}$ + 28 ${D1}_{20}$ + 69 ${D1}_{21}$ + 65 ${D1}_{22}$ + 27 ${D1}_{23}$ + $plusSpirit$ - $minusSpirit = $ 958
 \end{itemize}
-El grupo $D_1$ suma entre el 35 y el 45 porciento del total del total de los Oil Markets en las regiones 1, 2 y 3
+El grupo $D_1$ suma entre el 35 y el 45 \% del total del total de los Oil Markets en las regiones 1, 2 y 3
 \begin{itemize}
 \item 9 ${D1}_1$ + 13 ${D1}_2$ + 14 ${D1}_3$ + 17 ${D1}_4$ + 18 ${D1}_5$ + 19${D1}_6$ + 23 ${D1}_7$ + 21 ${D1}_8$ + $plusOil1$ - $minusOil1 = $ 53.6
 \item 9 ${D1}_9$ + 11 ${D1}_{10}$ + 17 ${D1}_{11}$ + 18 ${D1}_{12}$ + 18 ${D1}_{13}$ + 17 ${D1}_{14}$ + 22 ${D1}_{15}$ + 24 ${D1}_{16}$ + 36 ${D1}_{17}$ + 43 ${D1}_{18}$ + $plusOil2$ - $minusOil2 = $ 86
 \item 6 ${D1}_{19}$ + 15 ${D1}_{20}$ + 15 ${D1}_{21}$ + 25 ${D1}_{22}$ + 39 ${D1}_{23}$ + $plusOil3$ - $minusOil3 = $ 40
 \end{itemize}
-El grupo $D_1$ tiene entre el 35 y el 45 porciento del grupo A, que por ser entero son exactamente 3 retailers
+El grupo $D_1$ tiene entre el 35 y el 45 \% del grupo A, que por ser entero son exactamente 3 retailers
 \begin{itemize}
-\item ${D1}_1 + {D1}_2 + {D1}_3 + {D1}_5 + {D1}_6 + {D1}_{10} + {D1}_{15} + {D1}_{20} = 3$ \\
+\item ${D1}_1 + {D1}_2 + {D1}_3 + {D1}_5 + {D1}_6 + {D1}_{10} + {D1}_{15} + {D1}_{20} = 3$
 \end{itemize}
-El grupo $D_1$ tiene entre el 35 y el 45 porciento del grupo B, que por tener que ser entero son exactamente 6 retailers
+El grupo $D_1$ tiene entre el 35 y el 45 \% del grupo B, que por tener que ser entero son exactamente 6 retailers
 \begin{itemize}
 \item ${D1}_4 + {D1}_7 + {D1}_8 + {D1}_9 + {D1}_{11} + {D1}_{12} + {D1}_{13} + {D1}_{14} + {D1}_{15} + {D1}_{16} + {D1}_{17} + {D1}_{18} + {D1}_{19} + {D1}_{21} + {D1}_{22} + {D1}_{23}   = 6$
 \end{itemize}
-Por ultimo, las variables slack toman valores entre 0 y el 5 porciento del total de cada grupo.
+Por 'ultimo, las variables slack toman valores entre 0 y el 5 \% del total de cada grupo.
 \begin{itemize}
 \item $0 \leq minusDelivery \leq$ 36.5
 \item $0 \leq plusDelivery \leq$ 36.5
@@ -116,18 +116,18 @@ Por ultimo, las variables slack toman valores entre 0 y el 5 porciento del total
 \item $0 \leq plusSpirit \leq$ 119.75
 \end{itemize}
 \subsubsection{Objetivo}
-Lo primero que se pedia era verificar si existia una solucion factible. De ser posible, se pedian dos posibles objetivos.\\
+Lo primero que se ped'ia era verificar si exist'ia una soluci'on factible. De ser posible, se pedian dos posibles objetivos.\\
 El primer objetivo: Minimizar la suma de los desvios porcentuales de las separaciones 40/60.\\
 Minimizar: 
 \begin{itemize}
 \item $\frac{100}{292} minusDelivery$ + $\frac{100}{292} plusDelivery$ + $\frac{100}{53.6} minusOil1$ + $\frac{100}{53.6} plusOil1$ + $\frac{100}{86} minusOil2$ + $\frac{100}{86} plusOil2$ + $\frac{100}{40} minusOil3$ + $\frac{100}{40} plusOil3$ + $\frac{100}{958} minusSpirit$ + $\frac{100}{958} plusSpirit$
 \end{itemize}
-El segundo objetivo que se pedia era minimizar el maximo desvio porcentual.
+El segundo objetivo que se ped'ia era minimizar el m'aximo desv'io porcentual.
 Para esto se agrego al modelo una variable no entera:
 \begin{itemize}
 \item $maxDesvio$
 \end{itemize}
-Tambien se agregaron las siguientes restricciones: 
+Tambi'en se agregaron las siguientes restricciones: 
 \begin{itemize}
 \item $maxDesvios \leq \frac{100}{292} minusDelivery$ + $\frac{100}{292} plusDelivery$
 \item $maxDesvios \geq \frac{100}{53.6} minusOil1$ + $\frac{100}{53.6} plusOil1$
@@ -140,27 +140,14 @@ Minimizar
  \begin{itemize}
  \item $maxDesvios$
 \end{itemize}
-\newpage
 \subsection{Soluci'on}
-A continuacion el resultado devuelto por nuestra implementacion del modelo en cplex para el modelo junto con el primer objetivo.\\
+A continuaci'on el resultado devuelto por nuestra implementaci'on del modelo junto con el primer objetivo.\\
 Status = Optimal, Objective = 2.7976179692883845 \\
 Variables: \\
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{\noindent
 D1\_1 = 1.0 \\
-D1\_10 = 0.0 \\
-D1\_11 = 1.0 \\
-D1\_12 = 0.0 \\
-D1\_13 = 0.0 \\
-D1\_14 = -0.0 \\
-D1\_15 = 0.0 \\
-D1\_16 = 1.0 \\
-D1\_17 = -0.0 \\
-D1\_18 = 1.0 \\
-D1\_19 = -0.0 \\
 D1\_2 = 1.0 \\
-D1\_20 = 0.0 \\
-D1\_21 = 1.0 \\
-D1\_22 = 1.0 \\
-D1\_23 = 0.0 \\
 D1\_3 = 1.0 \\
 D1\_4 = 1.0 \\
 D1\_5 = 0.0 \\
@@ -168,37 +155,44 @@ D1\_6 = -0.0 \\
 D1\_7 = 0.0 \\
 D1\_8 = 0.0 \\
 D1\_9 = -0.0 \\
+D1\_10 = 0.0 \\
+D1\_11 = 1.0 \\
+D1\_12 = 0.0 \\
 minusDelivery = -0.0 \\
 minusOil1 = 0.0 \\
 minusOil2 = -0.0 \\
 minusOil3 = -0.0 \\
-minusSpirit = 34.0 \\
-plusDelivery = 0.0 \\
-plusOil1 = 0.6000000000000014 \\
-plusOil2 = 2.0 \\
-plusOil3 = -0.0 \\
-plusSpirit = -0.0 \\
-Podemos ver que la solucion no solo es factible, sino ademas optima.\\
-De esta forma, los retailers que conforman el grupo $D_{1}$ son los retailers con numero: 1,2,3,4,11,16,18,21,22\\
-Al correr el modelo con el segundo objetivo se obtuvo el siguiente resultado: \\
-Status = Optimal, Objective = 0.547945205479452 \\
-Variables: \\
-D1\_1 = 0.0 \\
-D1\_10 = 1.0 \\
-D1\_11 = 0.0 \\
-D1\_12 = -0.0 \\
+minusSpirit = 34.0
+}
+\ParallelRText{\noindent
 D1\_13 = 0.0 \\
 D1\_14 = -0.0 \\
 D1\_15 = 0.0 \\
 D1\_16 = 1.0 \\
 D1\_17 = -0.0 \\
 D1\_18 = 1.0 \\
-D1\_19 = 0.0 \\
-D1\_2 = 1.0 \\
-D1\_20 = -0.0 \\
+D1\_19 = -0.0 \\
+D1\_20 = 0.0 \\
 D1\_21 = 1.0 \\
 D1\_22 = 1.0 \\
 D1\_23 = 0.0 \\
+\\
+plusDelivery = 0.0 \\
+plusOil1 = 0.6000000000000014 \\
+plusOil2 = 2.0 \\
+plusOil3 = -0.0 \\
+plusSpirit = -0.0
+}
+\end{Parallel}
+Podemos ver que la soluci'on no solo es factible, sino adem'as 'optima.\\
+De esta forma, los retailers que conforman el grupo $D_{1}$ son los retailers con numero: 1,2,3,4,11,16,18,21,22.\\
+Al correr el modelo con el segundo objetivo se obtuvo el siguiente resultado: \\
+Status = Optimal, Objective = 0.547945205479452 \\
+Variables:
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{\noindent
+D1\_1 = 0.0 \\
+D1\_2 = 1.0 \\
 D1\_3 = -0.0 \\
 D1\_4 = 1.0 \\
 D1\_5 = 1.0 \\
@@ -206,16 +200,34 @@ D1\_6 = 0.0 \\
 D1\_7 = -0.0 \\
 D1\_8 = -0.0 \\
 D1\_9 = 1.0 \\
-maxDesvio = 0.547945205479452 \\
+D1\_10 = 1.0 \\
+D1\_11 = 0.0 \\
+D1\_12 = -0.0 \\
 minusDelivery = 4.0 \\
 minusOil1 = 0.7342465753424656 \\
 minusOil2 = 1.0890410958904109 \\
 minusOil3 = 0.0 \\
-minusSpirit = 0.0 \\
+minusSpirit = 0.0
+}
+\ParallelRText{\noindent
+D1\_13 = 0.0 \\
+D1\_14 = -0.0 \\
+D1\_15 = 0.0 \\
+D1\_16 = 1.0 \\
+D1\_17 = -0.0 \\
+D1\_18 = 1.0 \\
+D1\_19 = 0.0 \\
+D1\_20 = -0.0 \\
+D1\_21 = 1.0 \\
+D1\_22 = 1.0 \\
+D1\_23 = 0.0 \\
+maxDesvio = 0.547945205479452 \\
 plusDelivery = 0.0 \\
 plusOil1 = 6.334246575342467 \\
 plusOil2 = 0.08904109589041087 \\
 plusOil3 = 0.0 \\
-plusSpirit = 8.0 \\
-Nuevamente podemos observar que la solucion no solo es factible, sino ademas optima.\\
+plusSpirit = 8.0
+}
+\end{Parallel}
+Nuevamente podemos observar que la soluci'on no solo es factible, sino adem'as 'optima.\\
 Los retailers que conforman el grupo $D_1$ son los retailers con numero: 2,4,5,9,10,16,18,21,22.
